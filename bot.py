@@ -1,5 +1,7 @@
 from telegram.ext import Updater, MessageHandler, Filters
-from utils
+
+import utils
+from utils import search_download_youtube_video
 from loguru import logger
 
 
@@ -22,7 +24,7 @@ class Bot:
         """Main messages handler"""
         self.send_text(update, f'Your original message: {update.message.text}')
 
-    def send_video(self, update, context, file_path):
+    def send_video(self, update: object, context: object, file_path: object) -> object:
         """Sends video to a chat"""
         context.bot.send_video(chat_id=update.message.chat_id, video=open(file_path, 'rb'), supports_streaming=True)
 
@@ -43,13 +45,20 @@ class QuoteBot(Bot):
 
 
 class YoutubeBot(Bot):
-    pass
+
+    #def _message(self, update, text, quote=True):
+    def _message_handler(self, update, context):
+        self.send_text(update, f'Wait please your video is dowloading : {update.message.text}')
+        downloaded_videos = utils.search_download_youtube_video(update.message.text, num_results=2)
+        for index, video in enumerate(downloaded_videos, start=1):
+            self.send_text(update, f'Video {index}/{len(downloaded_videos)}')
+            context.bot.send_video(update.message.chat_id, open(video , 'rb'), True)
 
 
 if __name__ == '__main__':
-    with open('.telegramToken') as f:
+    with open('secret/.telegramToken') as f:
         _token = f.read()
 
-    my_bot = QuoteBot(_token)
+    my_bot = YoutubeBot(_token)
     my_bot.start()
 
