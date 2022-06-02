@@ -1,5 +1,5 @@
 from telegram.ext import Updater, MessageHandler, Filters
-from utils import search_download_youtube_video
+from utils
 from loguru import logger
 
 
@@ -50,6 +50,6 @@ if __name__ == '__main__':
     with open('.telegramToken') as f:
         _token = f.read()
 
-    my_bot = Bot(_token)
+    my_bot = QuoteBot(_token)
     my_bot.start()
 
