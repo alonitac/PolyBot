@@ -46,10 +46,9 @@ class QuoteBot(Bot):
 
 class YoutubeBot(Bot):
 
-    #def _message(self, update, text, quote=True):
     def _message_handler(self, update, context):
         self.send_text(update, f'Wait please your video is dowloading : {update.message.text}')
-        downloaded_videos = utils.search_download_youtube_video(update.message.text, num_results=2)
+        downloaded_videos = utils.search_download_youtube_video(update.message.text, num_results=1)
         for index, video in enumerate(downloaded_videos, start=1):
             self.send_text(update, f'Video {index}/{len(downloaded_videos)}')
             context.bot.send_video(update.message.chat_id, open(video , 'rb'), True)
