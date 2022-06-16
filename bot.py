@@ -1,4 +1,4 @@
-from telegram.ext import Updater, MessageHandler, Filters
+from telegram.ext import Updater, MessageHandler,Filters
 from utils import search_download_youtube_video
 from loguru import logger
 
@@ -43,13 +43,21 @@ class QuoteBot(Bot):
 
 
 class YoutubeBot(Bot):
-    pass
+
+    def _message_handler(self, update, context):
+        self.send_text(update, f'Video download first obs of: {update.message.text}' )
+        video_name = update.message.text
+        video_to_send = search_download_youtube_video(video_name=video_name)
+        for donwload_vid in video_to_send:
+            context.bot.send_video(chat_id=update.message.chat_id, video=open(donwload_vid, 'rb'), supports_streaming=True)
+
+
 
 
 if __name__ == '__main__':
     with open('.telegramToken') as f:
         _token = f.read()
 
-    my_bot = Bot(_token)
+    my_bot = YoutubeBot(_token)
     my_bot.start()
 
