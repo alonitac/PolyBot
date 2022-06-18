@@ -1,4 +1,6 @@
 from telegram.ext import Updater, MessageHandler, Filters
+
+import bot
 from utils import search_download_youtube_video
 from loguru import logger
 
@@ -43,13 +45,14 @@ class QuoteBot(Bot):
 
 
 class YoutubeBot(Bot):
-    pass
+
+    def _message_handler(self, update, context):
+        search_download_youtube_video(update.message.text)
 
 
 if __name__ == '__main__':
     with open('.telegramToken') as f:
         _token = f.read()
-
-    my_bot = Bot(_token)
+    my_bot = bot.YoutubeBot(_token)
     my_bot.start()
 
