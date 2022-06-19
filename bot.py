@@ -1,4 +1,5 @@
 from telegram.ext import Updater, MessageHandler, Filters
+import os
 
 import utils
 from utils import search_download_youtube_video
@@ -24,7 +25,7 @@ class Bot:
         """Main messages handler"""
         self.send_text(update, f'Your original message: {update.message.text}')
 
-    def send_video(self, update: object, context: object, file_path: object) -> object:
+    def send_video(self, update, context, file_path):
         """Sends video to a chat"""
         context.bot.send_video(chat_id=update.message.chat_id, video=open(file_path, 'rb'), supports_streaming=True)
 
@@ -49,9 +50,11 @@ class YoutubeBot(Bot):
     def _message_handler(self, update, context):
         self.send_text(update, f'Wait please your video is dowloading : {update.message.text}')
         downloaded_videos = utils.search_download_youtube_video(update.message.text, num_results=1)
+        file_name = ''.join(downloaded_videos)
         for index, video in enumerate(downloaded_videos, start=1):
             self.send_text(update, f'Video {index}/{len(downloaded_videos)}')
             context.bot.send_video(update.message.chat_id, open(video , 'rb'), True)
+        os.remove(f'./{file_name}')
 
 
 if __name__ == '__main__':
@@ -60,4 +63,3 @@ if __name__ == '__main__':
 
     my_bot = YoutubeBot(_token)
     my_bot.start()
-
