@@ -79,5 +79,5 @@ if __name__ == '__main__':
     with open('.telegeamToken') as f:
         _token = f.read()
 
-    my_bot = YoutubeBot(_token)
+    my_bot = YoutubeBot(_token.strip())
     my_bot.start()
