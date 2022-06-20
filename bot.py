@@ -1,6 +1,7 @@
 from telegram.ext import Updater, MessageHandler, Filters
 from utils import search_download_youtube_video
 from loguru import logger
+import os
 
 
 class Bot:
@@ -24,15 +25,18 @@ class Bot:
 
     def send_video(self, update, context, file_path):
         """Sends video to a chat"""
-        context.bot.send_video(chat_id=update.message.chat_id, video=open(file_path, 'rb'), supports_streaming=True)
+        return \
+        context.bot.send_video(chat_id=update.message.chat_id, video=open(file_path, 'rb'), supports_streaming=True)[
+            'video']
 
-    def send_text(self, update,  text, quote=False):
+    def send_text(self, update, text, quote=False):
         """Sends text to a chat"""
         # retry https://github.com/python-telegram-bot/python-telegram-bot/issues/1124
         update.message.reply_text(text, quote=quote)
 
 
 class QuoteBot(Bot):
+
     def _message_handler(self, update, context):
         to_quote = True
 
@@ -43,13 +47,37 @@ class QuoteBot(Bot):
 
 
 class YoutubeBot(Bot):
-    pass
+    last_cached = {}
+
+    def clean_dir(self, path):
+        if os.path.exists(path):
+            try:
+                os.remove(path)
+            except:
+                print("Could not remove file:", path)
+
+    def video_down(self, video_text, ):
+        video_file_path, video_you_t_id = search_download_youtube_video(video_text, 1, YoutubeBot.last_cached)
+        return video_file_path, video_you_t_id
+
+    def _message_handler(self, update, context):
+
+        file_path, video_you_t_id = self.video_down(update.message.text)
+
+        if video_you_t_id in YoutubeBot.last_cached:
+            logger.info(f'Video id: {video_you_t_id} was in use before!')
+            context.bot.send_video(chat_id=update.message.chat_id,
+                                   video=YoutubeBot.last_cached[video_you_t_id],
+                                   supports_streaming=True)
+        else:
+            file_id = self.send_video(update, context, file_path)['file_id']
+            YoutubeBot.last_cached.update({video_you_t_id: file_id})
+        self.clean_dir(file_path)
 
 
 if __name__ == '__main__':
-    with open('.telegramToken') as f:
+    with open('.telegeamToken') as f:
         _token = f.read()
 
-    my_bot = Bot(_token)
+    my_bot = YoutubeBot(_token)
     my_bot.start()
-
