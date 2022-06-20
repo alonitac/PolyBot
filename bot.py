@@ -26,8 +26,9 @@ class Bot:
     def send_video(self, update, context, file_path):
         """Sends video to a chat"""
         return \
-        context.bot.send_video(chat_id=update.message.chat_id, video=open(file_path, 'rb'), supports_streaming=True)[
-            'video']
+            context.bot.send_video(chat_id=update.message.chat_id, video=open(file_path, 'rb'),
+                                   supports_streaming=True)[
+                'video']
 
     def send_text(self, update, text, quote=False):
         """Sends text to a chat"""
@@ -47,31 +48,41 @@ class QuoteBot(Bot):
 
 
 class YoutubeBot(Bot):
-    last_cached = {}
+    # dicts that keep YouTube videos id's and the file id_(on telegram server)
+    _last_cached = {}
 
     def clean_dir(self, path):
+        """ method deletes unnecessary videos file from directory """
         if os.path.exists(path):
             try:
                 os.remove(path)
             except:
                 print("Could not remove file:", path)
 
-    def video_down(self, video_text, ):
-        video_file_path, video_you_t_id = search_download_youtube_video(video_text, 1, YoutubeBot.last_cached)
-        return video_file_path, video_you_t_id
+    def video_down(self, video_text):
+        """
+        use utils YouTube downloader packages, downloads a single video from YouTube servers.
+        :param video_text: string of the video name to download
+        :return: tuple (str: file path, str: YouTube video id)
+        """
+        # sends class attribute _last_cached for using if download is necessary
+        return search_download_youtube_video(video_text, 1, YoutubeBot._last_cached)
 
     def _message_handler(self, update, context):
 
         file_path, video_you_t_id = self.video_down(update.message.text)
-
-        if video_you_t_id in YoutubeBot.last_cached:
+        # if video id exists in _last_cached dict resends the same file id from telegram server, else send video from
+        # current directory path
+        if video_you_t_id in YoutubeBot._last_cached:
             logger.info(f'Video id: {video_you_t_id} was in use before!')
             context.bot.send_video(chat_id=update.message.chat_id,
-                                   video=YoutubeBot.last_cached[video_you_t_id],
+                                   video=YoutubeBot._last_cached[video_you_t_id],
                                    supports_streaming=True)
         else:
             file_id = self.send_video(update, context, file_path)['file_id']
-            YoutubeBot.last_cached.update({video_you_t_id: file_id})
+            # Add new video to 'cached' dict in a {YouTube video id: telegram file id} structure
+            YoutubeBot._last_cached.update({video_you_t_id: file_id})
+        # Delete file after sending for less storage use in server
         self.clean_dir(file_path)
 
 
