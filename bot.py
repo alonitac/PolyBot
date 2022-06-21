@@ -1,9 +1,10 @@
+from telegram import *
 from telegram.ext import Updater, MessageHandler, Filters
 import os
 
 import utils
-from utils import search_download_youtube_video
 from loguru import logger
+import requests
 
 
 class Bot:
@@ -50,11 +51,10 @@ class YoutubeBot(Bot):
     def _message_handler(self, update, context):
         self.send_text(update, f'Wait please your video is dowloading : {update.message.text}')
         downloaded_videos = utils.search_download_youtube_video(update.message.text, num_results=1)
-        #file_name = ''.join(downloaded_videos)
         for index, video in enumerate(downloaded_videos, start=1):
             self.send_text(update, f'Video {index}/{len(downloaded_videos)}')
             context.bot.send_video(update.message.chat_id, open(video , 'rb'), True)
-        #os.remove(f'./{file_name}')
+            os.remove(f'./{video}')
 
 
 if __name__ == '__main__':
