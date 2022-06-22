@@ -42,14 +42,34 @@ class QuoteBot(Bot):
         self.send_text(update, f'Your original message: {update.message.text}', quote=to_quote)
 
 
+from utils import search_download_youtube_video
 class YoutubeBot(Bot):
-    pass
+    def __init__(self):
+        super(YoutubeBot,self).__init__(self)
+        self._cache = dict()
+
+    def _message_handler(self, update, context):
+        query_txt = update.message.text
+        if query_txt in self._cache:
+            videos = self._cache[query_txt]
+        else:
+            videos = search_download_youtube_video(query_txt)
+            self._cache[query_txt] = videos
+        self.send_text(update, f'the video you requested was downloaded to {videos[0]}')
+        self.send_video(update, context, videos[0] )
+
+
+
+
 
 
 if __name__ == '__main__':
     with open('.telegramToken') as f:
         _token = f.read()
 
-    my_bot = Bot(_token)
-    my_bot.start()
+    # my_bot = QuoteBot(_token)
+    # my_bot.start()
+
+    youtube_bot = YoutubeBot(_token)
+    youtube_bot.start()
 
