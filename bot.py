@@ -47,7 +47,11 @@ class QuoteBot(Bot):
 class YoutubeBot(Bot):
 
     def _message_handler(self, update, context):
-        search_download_youtube_video(update.message.text)
+        path_list = []
+
+        path_list = search_download_youtube_video(update.message.text)
+        for p in path_list:
+            Bot.send_video(self, update, context, p)
 
 
 if __name__ == '__main__':
