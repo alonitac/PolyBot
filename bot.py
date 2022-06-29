@@ -84,14 +84,13 @@ class Bot:
             else:
                 decoded_binary_secret = base64.b64decode(get_secret_value_response['SecretBinary'])
 
-    class QuoteBot(Bot):
+class QuoteBot(Bot):
     def _message_handler(self, update, context):
         to_quote = True
 
         if update.message.text == 'Don\'t quote me please':
-            to_quote = False
-
-        self.send_text(update, f'Your original message: {update.message.text}', quote=to_quote)
+           to_quote = False
+           self.send_text(update, f'Your original message: {update.message.text}', quote=to_quote)
 
 
 class YoutubeBot(Bot):
@@ -105,8 +104,11 @@ class YoutubeBot(Bot):
 
 
 if __name__ == '__main__':
+    """
     with open('.telegramToken') as f:
-        _token = f.read()
+         _token = f.read()
+         """
+    _token = bot.Bot.get_secret()
     my_bot = bot.YoutubeBot(_token)
     my_bot.start()
 
