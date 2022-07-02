@@ -1,5 +1,3 @@
-python-telegram-bot>=13.11
+python-telegram-bot==13.13
 youtube-dl>=2021.12.17
-loguru
-boto3
-base64
+loguru~=0.6.0
