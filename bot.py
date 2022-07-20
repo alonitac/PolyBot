@@ -1,7 +1,10 @@
+import json
+import threading
+import botocore
 from telegram.ext import Updater, MessageHandler, Filters
-from utils import search_download_youtube_video
 from loguru import logger
-import os
+import boto3
+from utils import calc_backoff_per_instance
 
 
 class Bot:
@@ -25,19 +28,18 @@ class Bot:
 
     def send_video(self, update, context, file_path):
         """Sends video to a chat"""
-        return \
-            context.bot.send_video(chat_id=update.message.chat_id, video=open(file_path, 'rb'),
-                                   supports_streaming=True)[
-                'video']
+        context.bot.send_video(chat_id=update.message.chat_id, video=open(file_path, 'rb'), supports_streaming=True)
 
-    def send_text(self, update, text, quote=False):
+    def send_text(self, update, text, chat_id=None, quote=False):
         """Sends text to a chat"""
-        # retry https://github.com/python-telegram-bot/python-telegram-bot/issues/1124
-        update.message.reply_text(text, quote=quote)
+        if chat_id:
+            self.updater.bot.send_message(chat_id, text=text)
+        else:
+            # retry https://github.com/python-telegram-bot/python-telegram-bot/issues/1124
+            update.message.reply_text(text, quote=quote)
 
 
 class QuoteBot(Bot):
-
     def _message_handler(self, update, context):
         to_quote = True
 
@@ -47,48 +49,41 @@ class QuoteBot(Bot):
         self.send_text(update, f'Your original message: {update.message.text}', quote=to_quote)
 
 
-class YoutubeBot(Bot):
-    # dicts that keep YouTube videos id's and the file id_(on telegram server)
-    _last_cached = {}
-
-    def clean_dir(self, path):
-        """ method deletes unnecessary videos file from directory """
-        if os.path.exists(path):
-            try:
-                os.remove(path)
-            except:
-                print("Could not remove file:", path)
-
-    def video_down(self, video_text):
-        """
-        use utils YouTube downloader packages, downloads a single video from YouTube servers.
-        :param video_text: string of the video name to download
-        :return: tuple (str: file path, str: YouTube video id)
-        """
-        # sends class attribute _last_cached for using if download is necessary
-        return search_download_youtube_video(video_text, 1, YoutubeBot._last_cached)
+class YoutubeObjectDetectBot(Bot):
+    def __init__(self, token):
+        super().__init__(token)
+        threading.Thread(
+            target=calc_backoff_per_instance,
+            args=(workers_queue, asg, config.get("autoscaling_group_name"))
+        ).start()
 
     def _message_handler(self, update, context):
+        try:
+            chat_id = str(update.effective_message.chat_id)
+            response = workers_queue.send_message(
+                MessageBody=update.message.text,
+                MessageAttributes={
+                    'chat_id': {'StringValue': chat_id, 'DataType': 'String'}
+                }
+            )
+            logger.info(f'msg {response.get("MessageId")} has been sent to queue')
+            self.send_text(update, f'Your message is being processed...', chat_id=chat_id)
 
-        file_path, video_you_t_id = self.video_down(update.message.text)
-        # if video id exists in _last_cached dict resends the same file id from telegram server, else send video from
-        # current directory path
-        if video_you_t_id in YoutubeBot._last_cached:
-            logger.info(f'Video id: {video_you_t_id} was in use before!')
-            context.bot.send_video(chat_id=update.message.chat_id,
-                                   video=YoutubeBot._last_cached[video_you_t_id],
-                                   supports_streaming=True)
-        else:
-            file_id = self.send_video(update, context, file_path)['file_id']
-            # Add new video to 'cached' dict in a {YouTube video id: telegram file id} structure
-            YoutubeBot._last_cached.update({video_you_t_id: file_id})
-        # Delete file after sending for less storage use in server
-        self.clean_dir(file_path)
+        except botocore.exceptions.ClientError as error:
+            logger.error(error)
+            self.send_text(update, f'Something went wrong, please try again...')
 
 
 if __name__ == '__main__':
     with open('.telegeamToken') as f:
         _token = f.read()
 
-    my_bot = YoutubeBot(_token.strip())
+    with open('config.json') as f:
+        config = json.load(f)
+
+    sqs = boto3.resource('sqs', region_name=config.get('aws_region'))
+    workers_queue = sqs.get_queue_by_name(QueueName=config.get('bot_to_worker_queue_name'))
+    asg = boto3.client('autoscaling', region_name=config.get('aws_region'))
+
+    my_bot = YoutubeObjectDetectBot(_token)
     my_bot.start()
