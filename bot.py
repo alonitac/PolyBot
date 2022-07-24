@@ -1,6 +1,9 @@
 from telegram.ext import Updater, MessageHandler, Filters
-from utils import search_download_youtube_video
+from utils import search_youtube_video
 from loguru import logger
+import boto3
+
+dynamo = boto3.client('dynamodb')
 
 
 class Bot:
@@ -43,13 +46,28 @@ class QuoteBot(Bot):
 
 
 class YoutubeBot(Bot):
-    pass
+    def _message_handler(self, update, context):
+        if update.message.text.startswith('/myvideos'):
+            # Use dynamo.query() to retrieve user videos
+            pass
+
+        else:
+
+            for video in search_youtube_video(update.message.text):
+                item = {
+                    'chatId': {'S': str(update.message.chat_id)},
+                    'videoId': {'S': video['id']},
+                    'url': {'S': video['webpage_url']},
+                    'title': {'S': video['title']}
+                }
+
+                # Use dynamo.put_item() to store user video
 
 
 if __name__ == '__main__':
     with open('.telegramToken') as f:
         _token = f.read()
 
-    my_bot = Bot(_token)
+    my_bot = YoutubeBot(_token)
     my_bot.start()
 
