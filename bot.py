@@ -48,7 +48,7 @@ class QuoteBot(Bot):
 class YoutubeBot(Bot):
     def _message_handler(self, update, context):
         if update.message.text.startswith('/myvideos'):
-            # Use dynamo.query() to retrieve user videos
+            # TODO Use dynamo.query() to retrieve user videos
             pass
 
         else:
@@ -61,7 +61,7 @@ class YoutubeBot(Bot):
                     'title': {'S': video['title']}
                 }
 
-                # Use dynamo.put_item() to store user video
+                # TODO Use dynamo.put_item() to store user video
 
 
 if __name__ == '__main__':
