@@ -3,11 +3,18 @@ import time
 import boto3
 import botocore
 from loguru import logger
+import os
+
 from utils import search_download_youtube_video
 
 
 def process_msg(msg):
-    search_download_youtube_video(msg)
+    paths = search_download_youtube_video(msg)
+
+    for path in paths:
+        s3 = boto3.client('s3')
+        s3.upload_file(Bucket='itay-bucket1', Key="dir-1/" + path, Filename=path)
+        os.remove(path)
 
     # TODO upload the downloaded video to your S3 bucket
 
