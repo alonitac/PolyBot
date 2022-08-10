@@ -74,6 +74,8 @@ class YoutubeObjectDetectBot(Bot):
             self.send_text(update, f'Something went wrong, please try again...')
 
 
+
+
 if __name__ == '__main__':
     with open('.telegramToken') as f:
         _token = f.read()

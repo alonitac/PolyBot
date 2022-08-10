@@ -25,7 +25,7 @@ def calc_backlog_per_instance(sqs_queue_client, asg_client, asg_group_name):
         if msgs_in_queue == 0:
             backlog_per_instance = 0
         elif asg_size == 0:
-            backlog_per_instance = 99
+            backlog_per_instance = 10
         else:
             backlog_per_instance = msgs_in_queue / asg_size
 
