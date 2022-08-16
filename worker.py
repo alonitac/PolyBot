@@ -5,33 +5,24 @@ import botocore
 from loguru import logger
 import os
 import telegram
-import pymongo
-
 from utils import search_download_youtube_video
 
 def process_msg(msg, chatid):
-    #myclient = pymongo.MongoClient("mongodb+srv://itay:itay@cluster0.jjvfg14.mongodb.net/?retryWrites=true&w=majority")
-
-    #mydb = myclient["mydatabase"]
-    #mycol = mydb["customers"]
-
-    #mydict = {"name": "matt", "address": "Hi"}
-
-    #x = mycol.insert_one(mydict)
 
     paths = search_download_youtube_video(msg)
 
     for path in paths:
-        s3 = boto3.client('s3')
-        s3.upload_file(Bucket='itay-bucket1', Key="dir-1/" + path, Filename=path)
-
         with open('.telegramToken') as f:
             _token = f.read()
-
         bot = telegram.Bot(token=_token)
-        bot.send_video(chat_id=chatid, video=open(path, 'rb'), timeout=200)
+        strList = path.split("[")
+        videoID = strList[len(strList) - 1].split("]", 1)
+        bot.send_message(chat_id=chatid, text="youtube.com/watch?v=" + videoID[0])
+        #bot.send_video(chat_id=chatid, video=open(path, 'rb'), supports_streaming=True)
 
-        os.remove(path)
+
+
+
 
     # TODO upload the downloaded video to your S3 bucket
 
