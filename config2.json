@@ -1,0 +1,9 @@
+{
+  "TargetValue": 10,
+  "CustomizedMetricSpecification": {
+    "MetricName": "backlog_per_instance",
+    "Namespace": "itay?",
+    "Statistic": "Average",
+    "Unit": "Count"
+  }
+}
