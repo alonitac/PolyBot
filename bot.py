@@ -1,4 +1,5 @@
 from telegram.ext import Updater, MessageHandler,Filters
+from Finanace_utils import get_price_of_btc
 from utils import search_download_youtube_video
 from loguru import logger
 
@@ -34,7 +35,7 @@ class Bot:
 
 class QuoteBot(Bot):
     def _message_handler(self, update, context):
-        to_quote = True
+        to_quote = False
 
         if update.message.text == 'Don\'t quote me please':
             to_quote = False
@@ -51,6 +52,14 @@ class YoutubeBot(Bot):
         for donwload_vid in video_to_send:
             context.bot.send_video(chat_id=update.message.chat_id, video=open(donwload_vid, 'rb'), supports_streaming=True)
 
+class BitcoinPrice(Bot):
+
+    def _message_handler(self, update, context):
+        self.send_text(update, f'Getting price of Bitcoin' )
+        btc_price = get_price_of_btc()
+        self.send_text(update,btc_price)
+
+
 
 
 
@@ -58,6 +67,6 @@ if __name__ == '__main__':
     with open('.telegramToken') as f:
         _token = f.read()
 
-    my_bot = YoutubeBot(_token)
+    my_bot = BitcoinPrice(_token)
     my_bot.start()
 
