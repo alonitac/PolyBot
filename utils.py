@@ -1,6 +1,7 @@
 import time
 from yt_dlp import YoutubeDL
 from loguru import logger
+import boto3
 
 
 def search_download_youtube_video(video_name, num_results=1):
@@ -31,5 +32,22 @@ def calc_backlog_per_instance(sqs_queue_client, asg_client, asg_group_name):
         logger.info(f'backlog per instance: {backlog_per_instance}')
 
         # TODO send the backlog_per_instance metric to cloudwatch
+
+        boto3.client('cloudwatch').put_metric_data(
+            MetricData=[
+                {
+                    'MetricName': 'Back_Log_PolyBot',
+                    'Dimensions': [
+                        {
+                            'Name': 'Instances',
+                            'Value': 'Running'
+                        },
+                    ],
+                    'Unit': 'None',
+                    'Value': 1.0
+                },
+            ],
+            Namespace='POLYBOT/WORKERS'
+        )
 
         time.sleep(60)
