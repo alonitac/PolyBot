@@ -36,7 +36,7 @@ def calc_backlog_per_instance(sqs_queue_client, asg_client, asg_group_name):
 
         # TODO send the backlog_per_instance metric to cloudwatch
 
-        boto3.client('cloudwatch', region_name=config.get('aws_region')).put_metric_data(
+        boto3.client('cloudwatch').put_metric_data(
             MetricData=[
                 {
                     'MetricName': 'Back_Log_PolyBot',

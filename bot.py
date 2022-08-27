@@ -75,7 +75,7 @@ class YoutubeObjectDetectBot(Bot):
 
 
 if __name__ == '__main__':
-    with open('.telegeamToken') as f:
+    with open('.telegramToken') as f:
         _token = f.read()
 
     with open('config.json') as f:
@@ -85,5 +85,5 @@ if __name__ == '__main__':
     workers_queue = sqs.get_queue_by_name(QueueName=config.get('bot_to_worker_queue_name'))
     asg = boto3.client('autoscaling', region_name=config.get('aws_region'))
 
-    my_bot = YoutubeObjectDetectBot(_token.strip())
+    my_bot = YoutubeObjectDetectBot(_token)
     my_bot.start()

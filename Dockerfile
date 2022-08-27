@@ -7,4 +7,4 @@ COPY . /app
 RUN pip install --upgrade pip \
     && pip install -r requirements.txt
 
-CMD ["python3", "bot.py"]
+CMD ["python3", "worker.py"]
