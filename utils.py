@@ -44,7 +44,7 @@ def calc_backlog_per_instance(sqs_queue_client, asg_client, asg_group_name):
                         },
                     ],
                     'Unit': 'None',
-                    'Value': 1.0
+                    'Value': backlog_per_instance
                 },
             ],
             Namespace='POLYBOT/WORKERS'
