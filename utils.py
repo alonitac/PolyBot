@@ -2,6 +2,7 @@ import time
 from yt_dlp import YoutubeDL
 from loguru import logger
 import boto3
+import json
 
 
 def search_download_youtube_video(video_name, num_results=1):
@@ -18,6 +19,8 @@ def search_download_youtube_video(video_name, num_results=1):
 
 
 def calc_backlog_per_instance(sqs_queue_client, asg_client, asg_group_name):
+    with open('config.json') as f:
+        config = json.load(f)
     while True:
         msgs_in_queue = int(sqs_queue_client.attributes.get('ApproximateNumberOfMessages'))
         asg_size = asg_client.describe_auto_scaling_groups(AutoScalingGroupNames=[asg_group_name])['AutoScalingGroups'][0]['DesiredCapacity']
@@ -33,7 +36,7 @@ def calc_backlog_per_instance(sqs_queue_client, asg_client, asg_group_name):
 
         # TODO send the backlog_per_instance metric to cloudwatch
 
-        boto3.client('cloudwatch').put_metric_data(
+        boto3.client('cloudwatch', region_name=config.get('aws_region')).put_metric_data(
             MetricData=[
                 {
                     'MetricName': 'Back_Log_PolyBot',
