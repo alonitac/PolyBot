@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Stage II') {
             steps {
-                sh 'echo "stage II Run Lula Run"'
+                sh 'echo "stage II Run Lula Run yes"'
             }
         }
         stage('Stage III ...') {
