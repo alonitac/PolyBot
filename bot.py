@@ -28,7 +28,7 @@ class Bot:
 
     def send_text(self, update,  text, quote=False):
         """Sends text to a chat"""
-        # retry https://github.com/python-telegram-bot/python-telegram-bot/issues/1124
+        # https://github.com/python-telegram-bot/python-telegram-bot/issues/1124
         update.message.reply_text(text, quote=quote)
 
 
