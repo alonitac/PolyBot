@@ -8,7 +8,6 @@
         name: docker
         executable: pip3
     - name: Deploy the bot Docker container
-      become: yes
       community.general.docker_container:
         image: "{{ bot_image }}"
         name: bot
