@@ -12,7 +12,7 @@ pipeline {
                 '''
             }
         }
-        stage('Bot Deploy') {
+        stage('Ansible Bot Deploy') {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'bot-machine', usernameVariable: 'ssh_user', keyFileVariable: 'privatekey')]) {
                     sh '''
