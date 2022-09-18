@@ -16,6 +16,7 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'bot-machine', usernameVariable: 'ssh_user', keyFileVariable: 'privatekey')]) {
                     sh '''
+                    export ANSIBLE_HOST_KEY_CHECKING=False
                     ansible-playbook botDeploy.yaml -vv --extra-vars "bot_image=$BOT_IMAGE" --user=${ssh_user} -i hosts --private-key ${privatekey}
                     '''
                 }
