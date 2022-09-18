@@ -3,6 +3,10 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
   tasks:
+    - name: Install docker python package
+      ansible.builtin.pip:
+        name: docker
+        executable: pip3
     - name: Deploy the bot Docker container
       community.general.docker_container:
         image: "{{ bot_image }}"
