@@ -22,6 +22,7 @@ pipeline {
             environment {
                 ANSIBLE_HOST_KEY_CHECKING = 'False'
             }
+
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'bot-machine', usernameVariable: 'ssh_user', keyFileVariable: 'privatekey')]) {
                     sh '''
