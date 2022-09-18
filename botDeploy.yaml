@@ -7,8 +7,8 @@
       ansible.builtin.pip:
         name: docker
         executable: pip3
-    - name: restart auditd
-      become_user: root
+
+    - name: Docker login
       ansible.builtin.shell: |
         aws ecr get-login-password --region {{ registry_region }} | docker login --username AWS --password-stdin {{ registry_url }}
 
