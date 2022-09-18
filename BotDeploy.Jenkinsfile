@@ -10,12 +10,11 @@ pipeline {
         }
         stage('Bot Deploy') {
             steps {
-                withCredentials([file(credentialsId: 'bot-machine', variable: 'myprivatekey')]) {
+                withCredentials([sshUserPrivateKey(credentialsId: 'bot-machine', keyFileVariable: 'myprivatekey')]) {
 //                     writeFile file: 'private.pem', text: readFile(my_private_key)
 
                     sh '''
-                    echo $myprivatekey
-                    ansible-playbook botDeploy.yaml --extra-vars "bot_image=$BOT_IMAGE" -i hosts --private-key private.pem
+                    ansible-playbook botDeploy.yaml --extra-vars "bot_image=$BOT_IMAGE" -i hosts --private-key $myprivatekey
 
                     ls
                     '''
