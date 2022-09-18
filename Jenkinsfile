@@ -17,11 +17,10 @@ pipeline {
         }
         stage('Trigger Deploy') {
             steps {
-            build job: <BotDeploy>, wait: false, parameters: [
-            string(name: 'BOT_DEPLOY_NAME', value: "$REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG")
-        ]
-                  }
-           }
-
-        }
+                build job: <bot-deploy-job-name>, wait: false, parameters: [
+                    string(name: '<bot-docker-image-var-name>', value: "<full-url-to-bot-docker-image>")
+                ]
+            }
     }
+        }
+         }
