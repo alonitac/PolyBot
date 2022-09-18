@@ -20,8 +20,8 @@ pipeline {
             build job: <BotDeploy>, wait: false, parameters: [
             string(name: 'BOT_DEPLOY_NAME', value: "$REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG")
         ]
-    }
-}
+                  }
+           }
 
+        }
     }
-}
