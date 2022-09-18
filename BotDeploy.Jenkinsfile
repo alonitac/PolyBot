@@ -18,6 +18,7 @@ pipeline {
                     sh '''
                     export ANSIBLE_HOST_KEY_CHECKING=False
                     ansible-playbook botDeploy.yaml --extra-vars "bot_image=$BOT_IMAGE" --user=${ssh_user} -i hosts --private-key ${privatekey}
+
                     '''
                 }
             }
