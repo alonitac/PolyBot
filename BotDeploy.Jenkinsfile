@@ -17,6 +17,7 @@ pipeline {
                 withCredentials([sshUserPrivateKey(credentialsId: 'bot-machine', usernameVariable: 'ssh_user', keyFileVariable: 'privatekey')]) {
                     sh '''
                     cp ${privatekey} tmp.pem
+                    cat temp.pem
                     ansible-playbook botDeploy.yaml --extra-vars "bot_image=$BOT_IMAGE" --user=${ssh_user} -i hosts --private-key tmp.pem
                     '''
                 }
