@@ -12,17 +12,9 @@ pipeline {
             steps {
                 sh '''
                 aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin $REGISTRY_URL
-                docker build -t $IMAGE_NAME .
-                docker tag $IMAGE_NAME $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
+                docker build -t $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG .
                 docker push $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
                 '''
-            }
-        }
-        stage('Trigger Deploy') {
-            steps {
-                build job: "BotDeploy", wait: false, parameters: [
-                    string(name: 'BOT_IMAGE', value: "${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}")
-                ]
             }
         }
     }
