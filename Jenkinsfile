@@ -16,16 +16,6 @@ pipeline {
                 docker push $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
                 '''
             }
-            post {
-                always {
-                    sh '''
-                        if [[ docker images | grep -q alonit-bot.*$IMAGE_TAG ]]; then
-                            docker rmi $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
-                            docker rmi $IMAGE_NAME
-                        fi
-                    '''
-                }
-            }
         }
         stage('Trigger Deploy') {
             steps {
