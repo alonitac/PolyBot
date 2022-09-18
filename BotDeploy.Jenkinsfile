@@ -4,10 +4,8 @@ pipeline {
     stages {
         stage("Generate Ansible Inventory") {
             steps {
-                sh '''
-                aws ec2 describe-instances --region eu-north-1 --filters "Name=tag:App,Values=AlonitBot"  --query 'Reservations[].Instances[]' > hosts.json
-                python3 prepare_ansible_inv.py
-                '''
+                sh 'aws ec2 describe-instances --region eu-north-1 --filters "Name=tag:App,Values=AlonitBot"  --query "Reservations[].Instances[]" > hosts.json'
+                sh 'python3 prepare_ansible_inv.py'
             }
         }
         stage('Bot Deploy') {
