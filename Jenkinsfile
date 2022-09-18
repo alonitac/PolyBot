@@ -3,13 +3,26 @@ pipeline {
 
     stages {
         stage('Build') {
+            environment {
+                REGISTRY_URL = "352708296901.dkr.ecr.eu-north-1.amazonaws.com"
+                IMAGE_NAME = "alonit-bot:0.0.$BUILD_NUMBER"
+            }
             steps {
                 sh '''
-                aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 352708296901.dkr.ecr.eu-north-1.amazonaws.com
-                docker build -t alonit-bot:0.0.$BUILD_NUMBER .
-                docker tag alonit-bot:0.0.$BUILD_NUMBER 352708296901.dkr.ecr.eu-north-1.amazonaws.com/alonit-bot:0.0.$BUILD_NUMBER
-                docker push 352708296901.dkr.ecr.eu-north-1.amazonaws.com/alonit-bot:0.0.$BUILD_NUMBER
+                aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin $REGISTRY_URL
+                docker build -t $IMAGE_NAME .
+                docker tag $IMAGE_NAME $REGISTRY_URL/$IMAGE_NAME
+                docker push $REGISTRY_URL/$IMAGE_NAME
                 '''
+            }
+            post {
+                always {
+                    sh '''
+                        docker rmi $REGISTRY_URL/$IMAGE_NAME
+                        docker rmi $IMAGE_NAME
+
+                    '''
+                }
             }
         }
         stage('Stage II') {
