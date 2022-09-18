@@ -21,7 +21,7 @@ pipeline {
         stage('Trigger Deploy') {
             steps {
                 build job: "BotDeploy", wait: false, parameters: [
-                    string(name: 'image', value: "${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}")
+                    string(name: 'BOT_IMAGE', value: "${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}")
                 ]
             }
         }
