@@ -9,7 +9,6 @@ pipeline {
 
     stages {
         stage('Build') {
-
             steps {
                 sh '''
                 aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin $REGISTRY_URL
@@ -24,11 +23,6 @@ pipeline {
                 build job: "BotDeploy", wait: false, parameters: [
                     string(name: 'image', value: "${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}")
                 ]
-            }
-        }
-        stage('Stage III ...') {
-            steps {
-                sh 'echo echo "stage III..."'
             }
         }
     }
