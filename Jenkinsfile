@@ -1,13 +1,17 @@
 pipeline {
     agent any
+    environment{
+        REGISTRY_URL = "352708296901.dkr.ecr.eu-central-1.amazonaws.com"
+        IMAGE_TAG = "0.0.$BUILD_NUMBER"
+        IMAGE_NAME = "shlomigd"
+    }
     stages {
         stage('Build') {
             steps {
             sh '''
-                    aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 352708296901.dkr.ecr.eu-central-1.amazonaws.com
-                    docker build -t shlomigd:0.0.$BUILD_TAG .
-                    docker tag shlomigd:0.0.$BUILD_TAG 352708296901.dkr.ecr.eu-central-1.amazonaws.com/shlomigd:0.0.$BUILD_TAG
-                    docker push 352708296901.dkr.ecr.eu-central-1.amazonaws.com/shlomigd:0.0.$BUILD_TAG
+                    aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $REGISTRY_URL
+                    docker build -t   $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG .
+                    docker push $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
                     '''
             }
         }
