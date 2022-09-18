@@ -32,12 +32,11 @@ pipeline {
             }
         }
     }
-    post{
-        always {
-            script {
-             currentBuild.description = ("Branch : ${JOB.branch}\n GitCommiter : ${JOB.commitAuthor}\nGitLastMassage: ${JOB.lastCommitMassage}")
-            }
-        }
-    }
-
+//     post{
+//         always {
+//             script {
+//              currentBuild.description = ("Branch : ${JOB.branch}\n GitCommiter : ${JOB.commitAuthor}\nGitLastMassage: ${JOB.lastCommitMassage}")
+//             }
+//         }
+//     }
 }
