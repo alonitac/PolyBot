@@ -17,10 +17,9 @@ def prepare_ansible_inventory():
     for instance in instances:
         instance_name = get_instance_name(instance['Tags'])
         instance_ip = instance['PublicIpAddress']
-        instance_username = 'ec2-user'
 
         hosts.append(
-            f"{instance_name} ansible_host={instance_ip} ansible_user={instance_username}\n"
+            f"{instance_name} ansible_host={instance_ip}\n"
         )
 
     with open('hosts', 'w') as f:
