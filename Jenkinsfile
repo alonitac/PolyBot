@@ -19,8 +19,11 @@ pipeline {
         }
         stage('Trigger Deploy') {
             steps {
+                script {
+                    env.IMAGE = "${REGISTRY_URL}"
+                }
                 build job: "BotDeploy", wait: false, parameters: [
-                    string(name: 'image', value: "${env.REGISTRY_URL}")
+                    string(name: 'image', value: "${env.IMAGE}")
                 ]
             }
         }
