@@ -5,6 +5,7 @@ pipeline {
         stage("Install Ansible") {
             steps {
                 sh 'python3 -m pip install ansible requests docker'
+                sh '/var/lib/jenkins/.local/bin/ansible-galaxy collection install community.general'
             }
         }
         stage("Generate Ansible Inventory") {
@@ -24,7 +25,7 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'bot-machine', usernameVariable: 'ssh_user', keyFileVariable: 'privatekey')]) {
                     sh '''
-                    /var/lib/jenkins/.local/bin/ansible-playbook botDeploy.yaml -e 'ansible_python_interpreter=/usr/bin/python3' --extra-vars "bot_image=$BOT_IMAGE" --user=${ssh_user} -i hosts --private-key ${privatekey}
+                    /var/lib/jenkins/.local/bin/ansible-playbook botDeploy.yaml --extra-vars "bot_image=$BOT_IMAGE" --user=${ssh_user} -i hosts --private-key ${privatekey}
                     '''
                 }
             }
