@@ -10,7 +10,7 @@
     - name: restart auditd
       become_user: root
       ansible.builtin.shell: |
-        aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 352708296901.dkr.ecr.eu-north-1.amazonaws.com
+        aws ecr get-login-password --region {{ registry_region }} | docker login --username AWS --password-stdin {{ registry_url }}
 
     - name: Deploy the bot Docker container
       community.general.docker_container:
