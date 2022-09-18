@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage("Install Ansible") {
             steps {
-                sh 'python3 -m pip install ansible requests docker'
+                sh 'python3 -m pip install ansible'
                 sh '/var/lib/jenkins/.local/bin/ansible-galaxy collection install community.general'
             }
         }
