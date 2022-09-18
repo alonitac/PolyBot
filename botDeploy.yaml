@@ -3,10 +3,10 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
   tasks:
-    - name: Deploy the bot Docker container
-      docker_container:
-        image: "{{ bot_image }}"
-        name: bot
-        state: started
-        auto_remove: true
-        restart_policy: always
+#    - name: Deploy the bot Docker container
+#      docker_container:
+#        image: "{{ bot_image }}"
+#        name: bot
+#        state: started
+#        auto_remove: true
+#        restart_policy: always
