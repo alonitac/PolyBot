@@ -18,8 +18,8 @@ pipeline {
             post {
                 always {
                     sh '''
-                        docker rmi $REGISTRY_URL/$IMAGE_NAME
-                        docker rmi $IMAGE_NAME
+                        # docker rmi $REGISTRY_URL/$IMAGE_NAME
+                        # docker rmi $IMAGE_NAME
 
                     '''
                 }
