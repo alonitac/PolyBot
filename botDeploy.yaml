@@ -17,5 +17,4 @@
         image: "{{ bot_image }}"
         name: bot
         state: started
-        auto_remove: true
         restart_policy: always
