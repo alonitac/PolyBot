@@ -26,6 +26,7 @@ def prepare_ansible_inventory():
     with open('hosts', 'w') as f:
         f.write('[bot]\n')
         f.writelines(hosts)
+        f.write("\n[bot:vars]\nansible_python_interpreter=/usr/bin/python3")
 
 
 if __name__ == '__main__':
