@@ -11,7 +11,7 @@ pipeline {
                 docker push 352708296901.dkr.ecr.eu-north-1.amazonaws.com/amip-bot:0.0.$BUILD_NUMBER
                 '''
             }
-        }
+        }cf
         stage('Stage II') {
             steps {
                 sh 'echo "stage II Run Lula Run yes"'
