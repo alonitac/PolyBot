@@ -3,7 +3,7 @@
   tasks:
     - name: Deploy the bot Docker container
       docker_container:
-        image: {{ bot_image }}
+        image: "{{ bot_image }}"
         name: bot
         state: started
         auto_remove: true
