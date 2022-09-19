@@ -2,11 +2,10 @@ pipeline {
     agent any
 
     stages {
-        stage('Deploy') {
-            stage
-                sh '''
-                echo deploying
-                '''
+        stage('Install Ansible') {
+            stage {
+               sh 'python3 -m pip install ansible'
+               sh '/var/lib/jenkins/.local/bin/ansible-galaxy collection install community.general'
             }
         }
     }
