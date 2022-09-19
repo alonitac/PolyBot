@@ -1,11 +1,11 @@
 pipeline {
     agent any
 
-    environment {
-        REGISTRY_URL =
-        IMAGE_TAG = "0.0.$BUILD_NUMBER"
-        IMAGE_NAME = "amip-bot"
-    }
+//     environment {
+//         REGISTRY_URL =
+//         IMAGE_TAG = "0.0.$BUILD_NUMBER"
+//         IMAGE_NAME = "amip-bot"
+//     }
 
 
     stages {
