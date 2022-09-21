@@ -39,6 +39,15 @@ pipeline {
                 }
             }
         }
+        stage('Scan Image') {
+          steps {
+            withCredentials([string(credentialsId: 'snyk', variable: 'SNYK_TOKEN')]) {
+                sh '''
+                snyk container test debian
+                '''
+            }
+          }
+        }
         stage('Trigger Deploy') {
             steps {
                 build job: 'BotDeploy', wait: false, parameters: [
