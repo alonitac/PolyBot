@@ -27,8 +27,19 @@ pipeline {
             steps {
                 sh '''
                 aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin $REGISTRY_URL
-                docker build -t $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG .
-                docker push 352708296901.dkr.ecr.eu-north-1.amazonaws.com/alonit-bot:0.0.$BUILD_NUMBER
+                docker build -t $IMAGE_NAME:$IMAGE_TAG .
+                docker tag $IMAGE_NAME:$IMAGE_TAG $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
+                '''
+
+                withCredentials([string(credentialsId: 'snyk', variable: 'SNYK_TOKEN')]) {
+                    sh '''
+                    snyk container test --severity-threshold=high $IMAGE_NAME:$IMAGE_TAG  --file=Dockerfile
+                    '''
+                }
+
+
+                sh '''
+                docker push $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
                 '''
             }
             post {
@@ -39,15 +50,7 @@ pipeline {
                 }
             }
         }
-        stage('Scan Image') {
-          steps {
-            withCredentials([string(credentialsId: 'snyk', variable: 'SNYK_TOKEN')]) {
-                sh '''
-                snyk container test debian
-                '''
-            }
-          }
-        }
+
         stage('Trigger Deploy') {
             steps {
                 build job: 'BotDeploy', wait: false, parameters: [
@@ -56,11 +59,4 @@ pipeline {
             }
         }
     }
-//     post{
-//         always {
-//             script {
-//              currentBuild.description = ("Branch : ${JOB.branch}\n GitCommiter : ${JOB.commitAuthor}\nGitLastMassage: ${JOB.lastCommitMassage}")
-//             }
-//         }
-//     }
 }
