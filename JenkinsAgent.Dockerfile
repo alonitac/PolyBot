@@ -7,6 +7,6 @@ RUN yum update -y \
 
 
 FROM jenkins/agent
-COPY --from=docker:dind /usr/local/bin/docker /usr/local/bin/
+COPY --from=docker /usr/local/bin/docker /usr/local/bin/
 COPY --from=awscli-installer /usr/local/aws-cli/ /usr/local/aws-cli/
 COPY --from=awscli-installer /aws-cli-bin/ /usr/local/bin/
