@@ -29,7 +29,7 @@ pipeline {
             post {
                 always {
                     sh '''
-                    docker image prune -f --filter "until=10days"
+                    docker image prune -f --filter "until=240h"
                     '''
                 }
             }
