@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
                 image '352708296901.dkr.ecr.eu-north-1.amazonaws.com/jenkins-agent:latest'
-                args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+                args  '--user jenkins -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
 
