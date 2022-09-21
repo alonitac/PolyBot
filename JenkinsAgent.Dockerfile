@@ -1,4 +1,4 @@
-FROM amazonlinux:2 as awscli-installer
+FROM amazonlinux:2 as installer
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 RUN yum update -y \
   && yum install -y unzip \
@@ -10,7 +10,7 @@ RUN mkdir /snyk && cd /snyk \
 
 FROM jenkins/agent
 COPY --from=docker /usr/local/bin/docker /usr/local/bin/
-COPY --from=awscli-installer /usr/local/aws-cli/ /usr/local/aws-cli/
-COPY --from=awscli-installer /aws-cli-bin/ /usr/local/bin/
-COPY --from=awscli-installer /snyk/ /usr/local/bin/
+COPY --from=installer /usr/local/aws-cli/ /usr/local/aws-cli/
+COPY --from=installer /aws-cli-bin/ /usr/local/bin/
+COPY --from=installer /snyk/ /usr/local/bin/
 

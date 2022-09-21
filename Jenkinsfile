@@ -1,16 +1,5 @@
 pipeline {
-    agent {
-        docker {
-                image '352708296901.dkr.ecr.eu-north-1.amazonaws.com/jenkins-agent:3'
-                args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
-
-    options {
-        buildDiscarder(logRotator(daysToKeepStr: '30'))
-        disableConcurrentBuilds()
-        timestamps()
-    }
+    agent any
 
     environment {
         REGISTRY_URL = "352708296901.dkr.ecr.eu-north-1.amazonaws.com"
@@ -20,25 +9,11 @@ pipeline {
 
     stages {
         stage('Build') {
-            options {
-                timeout(time: 10, unit: 'MINUTES')
-            }
-
             steps {
                 sh '''
                 aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin $REGISTRY_URL
                 docker build -t $IMAGE_NAME:$IMAGE_TAG .
                 docker tag $IMAGE_NAME:$IMAGE_TAG $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
-                '''
-
-                withCredentials([string(credentialsId: 'snyk', variable: 'SNYK_TOKEN')]) {
-                    sh '''
-                    snyk container test --severity-threshold=high $IMAGE_NAME:$IMAGE_TAG  --file=Dockerfile
-                    '''
-                }
-
-
-                sh '''
                 docker push $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
                 '''
             }
