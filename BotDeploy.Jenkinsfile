@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-            string(name: 'BOT_IMAGE_NAME')
+        string(name: 'BOT_IMAGE_NAME')
     }
 
     stages {
@@ -25,6 +25,22 @@ pipeline {
                 echo "Inventory generated"
                 cat hosts
                 '''
+            }
+        }
+
+        stage('Ansible Bot Deploy') {
+            environment {
+                ANSIBLE_HOST_KEY_CHECKING = 'False'
+                REGISTRY_URL = '352708296901.dkr.ecr.eu-north-1.amazonaws.com'
+                REGISTRY_REGION = 'eu-north-1'
+            }
+
+            steps {
+                withCredentials([sshUserPrivateKey(credentialsId: 'bot-instances', usernameVariable: 'ssh_user', keyFileVariable: 'privatekey')]) {
+                    sh '''
+                    /var/lib/jenkins/.local/bin/ansible-playbook botDeploy.yaml --extra-vars "registry_region=$REGISTRY_REGION  registry_url=$REGISTRY_URL bot_image=$BOT_IMAGE_NAME" --user=${ssh_user} -i hosts --private-key ${privatekey}
+                    '''
+                }
             }
         }
     }
