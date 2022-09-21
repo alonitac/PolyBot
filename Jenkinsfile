@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    options {
+        buildDiscarder(logRotator(daysToKeepStr: '30'))
+        disableConcurrentBuilds()
+        timestamps()
+    }
+
     environment {
         REGISTRY_URL = "352708296901.dkr.ecr.eu-north-1.amazonaws.com"
         IMAGE_TAG = "0.0.$BUILD_NUMBER"
@@ -9,6 +15,10 @@ pipeline {
 
     stages {
         stage('Build') {
+            options {
+                timeout(time: 10, unit: 'MINUTES')
+            }
+
             steps {
                 sh '''
                 aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin $REGISTRY_URL
