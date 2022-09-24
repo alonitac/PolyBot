@@ -5,8 +5,16 @@ pipeline {
         IMAGE_TAG = "0.0.$BUILD_NUMBER"
         IMAGE_NAME = "shlomigd"
     }
+    options {
+        buildDiscarder(logRotator(daysToKeepStr: '30'))
+        disableConcurrentBuilds()
+        timestamps()
+    }
     stages {
         stage('Build') {
+            options {
+               timeout(time: 10, unit: 'MINUTES')
+            }
             steps {
             sh '''
                     aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $REGISTRY_URL
