@@ -36,7 +36,7 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'bot-instances', usernameVariable: 'ssh_user', keyFileVariable: 'privatekey')]) {
                     sh '''
-                    /var/lib/jenkins/.local/bin/ansible-playbook botDeploy.yaml --extra-vars "registry_region=$REGISTRY_REGION  registry_url=$REGISTRY_URL bot_image=$BOT_IMAGE" --user=${ec2-user} -i hosts --private-key ${privatekey}
+                    /var/lib/jenkins/.local/bin/ansible-playbook botDeploy.yaml --extra-vars "registry_region=$REGISTRY_REGION  registry_url=$REGISTRY_URL bot_image=$BOT_IMAGE_NAME" --user=${ec2-user} -i hosts --private-key ${privatekey}
                     '''
                 }
             }
