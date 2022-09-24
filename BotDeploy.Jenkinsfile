@@ -10,7 +10,7 @@ pipeline {
         }
         stage("Generate Ansible Inventory") {
             environment {
-                BOT_EC2_APP_TAG = "Shlomigd_polybot"
+                BOT_EC2_APP_TAG = "ShlomigdBot"
                 BOT_EC2_REGION = "eu-central-1"
             }
             steps {
