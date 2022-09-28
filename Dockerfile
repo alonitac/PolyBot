@@ -1,4 +1,4 @@
-FROM python:3.8.12-slim-buster
+FROM python:3.8-slim-bullseye
 WORKDIR /yt_down_bot
 LABEL app=bot
 COPY . .
