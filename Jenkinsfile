@@ -20,14 +20,6 @@ pipeline {
     }
 
     stages {
-        stage('Login Docker') {
-            agent {
-                label 'general2'
-            }
-            steps {
-                sh 'aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin $REGISTRY_URL'
-            }
-        }
         stage('Build') {
             options {
                 timeout(time: 10, unit: 'MINUTES')
