@@ -22,16 +22,3 @@ class TestBacklogPerInstanceMetric(unittest.TestCase):
         })
 
         self.assertEqual(calc_backlog_per_instance(self.sqs_queue_client, self.asg_client, None), 99)
-
-    def test_no_worker_full_queue2(self):
-        self.sqs_queue_client.attributes = {
-            'ApproximateNumberOfMessages': '100'
-        }
-
-        self.asg_client.describe_auto_scaling_groups = Mock(return_value={
-            'AutoScalingGroups': [{
-                'DesiredCapacity': 0
-            }]
-        })
-
-        self.assertEqual(calc_backlog_per_instance(self.sqs_queue_client, self.asg_client, None), 1)
