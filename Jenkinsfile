@@ -1,7 +1,6 @@
 pipeline {
     agent {
         docker {
-            label 'general2'
             image '352708296901.dkr.ecr.eu-north-1.amazonaws.com/alonit-jenkins-agent:1'
             args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
         }
@@ -31,11 +30,11 @@ pipeline {
                 docker build -t $IMAGE_NAME:$IMAGE_TAG .
                 '''
 
-//                 withCredentials([string(credentialsId: 'snyk', variable: 'SNYK_TOKEN')]) {
-//                     sh '''
-//                     snyk container test $IMAGE_NAME:$IMAGE_TAG --severity-threshold=high --file=Dockerfile
-//                     '''
-//                 }
+                withCredentials([string(credentialsId: 'snyk', variable: 'SNYK_TOKEN')]) {
+                    sh '''
+                    snyk container test $IMAGE_NAME:$IMAGE_TAG --severity-threshold=high --file=Dockerfile
+                    '''
+                }
 
                 sh '''
                 docker tag $IMAGE_NAME:$IMAGE_TAG $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
