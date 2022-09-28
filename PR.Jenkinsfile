@@ -3,7 +3,6 @@ pipeline {
 
     stages {
         stage('Unittest') {
-            when { changeRequest() }
             steps {
                 sh '''
                 pip install -r requirements.txt
