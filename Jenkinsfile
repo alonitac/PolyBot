@@ -31,11 +31,11 @@ pipeline {
                 docker build -t $IMAGE_NAME:$IMAGE_TAG .
                 '''
 
-                withCredentials([string(credentialsId: 'snyk', variable: 'SNYK_TOKEN')]) {
-                    sh '''
-                    snyk container test $IMAGE_NAME:$IMAGE_TAG --severity-threshold=high --file=Dockerfile
-                    '''
-                }
+//                 withCredentials([string(credentialsId: 'snyk', variable: 'SNYK_TOKEN')]) {
+//                     sh '''
+//                     snyk container test $IMAGE_NAME:$IMAGE_TAG --severity-threshold=high --file=Dockerfile
+//                     '''
+//                 }
 
                 sh '''
                 docker tag $IMAGE_NAME:$IMAGE_TAG $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
