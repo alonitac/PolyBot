@@ -14,7 +14,6 @@ pipeline {
                     junit allowEmptyResults: true, testResults: 'results.xml'
                 }
             }
-
         }
         stage('Functional Test') {
             steps {
