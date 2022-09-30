@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        REGISTRY_URL ="352708296901.dkr.ecr.eu-north-1.amazonaws.com"
+        REGISTRY_URL ="352708296901.dkr.ecr.eu-north-1.amazonaws.com/amip-bot"
         IMAGE_TAG = "0.0.$BUILD_NUMBER"
         IMAGE_NAME = "amip-bot"
     }
