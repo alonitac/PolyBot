@@ -27,7 +27,7 @@
                  stage('Ansible Bot Deploy') {
                     environment {
                         ANSIBLE_HOST_KEY_CHECKING = 'False'
-                        REGISTRY_URL = '352708296901.dkr.ecr.eu-north-1.amazonaws.com/amip-bot'
+                        REGISTRY_URL = "352708296901.dkr.ecr.eu-north-1.amazonaws.com/amip-bot"
                         REGISTRY_REGION = 'eu-north-1'
                     }
                     steps {
