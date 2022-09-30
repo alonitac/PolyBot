@@ -1,8 +1,8 @@
 pipeline {
     agent {
         docker {
-            label 'general'
-            image '352708296901.dkr.ecr.eu-north-1.amazonaws.com/alonit-jenkins-agent:1'
+            label 'amip-jenkins-test'
+            image '352708296901.dkr.ecr.eu-north-1.amazonaws.com/amip-jenkins-agent:1'
             args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
@@ -16,7 +16,7 @@ pipeline {
     environment {
         REGISTRY_URL = "352708296901.dkr.ecr.eu-north-1.amazonaws.com"
         IMAGE_TAG = "0.0.$BUILD_NUMBER"
-        IMAGE_NAME = "alonit-bot"
+        IMAGE_NAME = "amip-bot"
     }
 
     stages {
@@ -54,7 +54,7 @@ pipeline {
         stage('Trigger Deploy') {
             steps {
                 build job: 'BotDeploy', wait: false, parameters: [
-                    string(name: 'BOT_IMAGE_NAME', value: "352708296901.dkr.ecr.eu-north-1.amazonaws.com/alonit-bot:0.0.${BUILD_NUMBER}")
+                    string(name: 'BOT_IMAGE_NAME', value: "352708296901.dkr.ecr.eu-north-1.amazonaws.com/amip-bot:0.0.${BUILD_NUMBER}")
                 ]
             }
         }
