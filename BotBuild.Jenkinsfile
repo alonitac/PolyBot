@@ -22,6 +22,7 @@ pipeline {
             always {
                 sh '''
                    docker image prune -f --filter "label=app=bot"
+
                 '''
                 }
             }
