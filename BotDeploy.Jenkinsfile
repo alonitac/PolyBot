@@ -4,7 +4,7 @@
         stages {
             stage('Install Ansible') {
                 steps {
-                   sh 'python3 -m pip install ansible'
+                   sh 'python3 -m pip install wheel ansible'
                    sh '/var/lib/jenkins/.local/bin/ansible-galaxy collection install community.general'
                 }
             }
