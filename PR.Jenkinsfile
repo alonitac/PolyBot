@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage ('PR testing') {
 //                 failFast true
-//                 parallel {
+                steps {
                     stage('Unittest') {
                         steps {
                             sh '''
@@ -28,7 +28,7 @@ pipeline {
                             }
                         }
                     }
-//                 }
+                }
         }
 
     }
