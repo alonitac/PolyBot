@@ -1,9 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage ('PR testing') {
+//         stage ('PR testing') {
 //                 failFast true
-                steps {
+//                 parallel {
                     stage('Unittest') {
                         steps {
                             sh '''
@@ -28,8 +28,8 @@ pipeline {
                             }
                         }
                     }
-                }
-        }
+//                 }
+//         }
 
     }
 }
