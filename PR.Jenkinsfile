@@ -24,7 +24,11 @@ pipeline {
                         post {
                             always {
                                 sh 'cat pylint.log'
-                                recordIssues healthy: 1, tools: [pyLint(name: 'report name', pattern: '**/pylint.log')], unhealthy: 2
+                                recordIssues (
+                                    enabledForFailure: true,
+                                    aggregatingResults: true,
+                                    tools: [pyLint(name: 'report name', pattern: '**/pylint.log')]
+                                )
                             }
                         }
                     }
