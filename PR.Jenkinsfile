@@ -2,22 +2,31 @@ pipeline {
     agent any
 
     stages {
-        stage('Unittest') {
-            steps {
-                sh '''
-                pip3 install -r requirements.txt
-                python3 -m pytest --junitxml results.xml tests
-                '''
-            }
-            post {
-                always {
-                    junit allowEmptyResults: true, testResults: 'results.xml'
+        parallel {
+            failFast: true
+            stage('Unittest') {
+                steps {
+                    sh '''
+                    pip3 install -r requirements.txt
+                    python3 -m pytest --junitxml results.xml tests
+                    '''
+                }
+                post {
+                    always {
+                        junit allowEmptyResults: true, testResults: 'results.xml'
+                    }
                 }
             }
-        }
-        stage('Functional Test') {
-            steps {
-                echo 'testing...'
+            stage('Static code linting') {
+                steps {
+                   sh 'python3 -m pylint -f parseable --reports=no *.py > pylint.log'
+                }
+                post {
+                    always {
+                        sh 'cat pylint.log'
+                        recordIssues healthy: 1, tools: [pyLint(name: 'report name', pattern: '**/pylint.log')], unhealthy: 2
+                    }
+                }
             }
         }
     }
