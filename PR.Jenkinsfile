@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    options {
+        parallelsAlwaysFailFast()
+    }
     stages {
         stage ('PR testing') {
                 parallel {
