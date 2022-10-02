@@ -3,8 +3,6 @@ pipeline {
 
     stages {
         stage ('PR testing') {
-                failFast: true
-
                 parallel {
                     stage('Unittest') {
                         steps {
