@@ -21,7 +21,7 @@ class TestBacklogPerInstanceMetric(unittest.TestCase):
             }]
         })
 
-        self.assertEqual(calc_backlog_per_instance(self.sqs_queue_client, self.asg_client, None), 98)
+        self.assertEqual(calc_backlog_per_instance(self.sqs_queue_client, self.asg_client, None), 99)
 
     def test_no_workers_empty_queue(self):
         self.sqs_queue_client.attributes = {
