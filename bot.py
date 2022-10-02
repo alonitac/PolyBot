@@ -1,5 +1,6 @@
 import json
 import threading
+# pylint: disable=import-error
 import botocore
 from telegram.ext import Updater, MessageHandler, Filters
 from loguru import logger
