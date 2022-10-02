@@ -8,7 +8,7 @@
                    sh '/var/lib/jenkins/.local/bin/ansible-galaxy collection install community.general'
                 }
             }
-                 stage("Generate Ansible Inventory") {
+                 steps("Generate Ansible Inventory") {
                     environment {
                         BOT_EC2_APP_TAG = "amip-bot-jankins"
                         BOT_EC2_REGION = "eu-north-1"
