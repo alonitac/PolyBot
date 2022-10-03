@@ -22,7 +22,6 @@
                         '''
                     }
                  }
-
                  stage('Ansible Bot Deploy') {
                     environment {
                         ANSIBLE_HOST_KEY_CHECKING = 'False'
