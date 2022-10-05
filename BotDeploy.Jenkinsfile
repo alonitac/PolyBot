@@ -5,6 +5,7 @@
             string(name: 'BOT_IMAGE_NAME')
         }
 
+
         stages {
             stage('Install Ansible') {
                 steps {
