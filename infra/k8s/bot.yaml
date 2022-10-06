@@ -1,3 +1,13 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: telegram-bot-token
+  namespace: {{APP_ENV}}
+type: Opaque
+data:
+  token: {{TELEGRAM_TOKEN}}
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -28,13 +38,4 @@ spec:
             secretName: telegram-bot-token
             items:
               - key: token
-                path: "/app/.telegramToken"
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: telegram-bot-token
-  namespace: {{APP_ENV}}
-type: Opaque
-data:
-  token: {{TELEGRAM_TOKEN}}
+                path: ".telegramToken"
