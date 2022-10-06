@@ -1,3 +1,9 @@
+node('MyServer') {
+
+    sh 'aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 352708296901.dkr.ecr.eu-north-1.amazonaws.com'
+}
+
+
 pipeline {
     agent {
         docker {
