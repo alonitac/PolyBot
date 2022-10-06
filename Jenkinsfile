@@ -12,11 +12,13 @@ pipeline {
         stage('Build Bot app') {
    steps {
        sh '''
+            echo "build image"
             aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 352708296901.dkr.ecr.eu-west-2.amazonaws.com
 
             docker build -t schiff-repo .
 
             docker tag schiff-repo:1 352708296901.dkr.ecr.eu-west-2.amazonaws.com/schiff-repo:1
+
 
             docker push 352708296901.dkr.ecr.eu-west-2.amazonaws.com/schiff-repo:1
        '''
