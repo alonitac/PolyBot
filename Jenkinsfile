@@ -16,7 +16,7 @@ pipeline {
 
             docker build -t schiff-repo .
 
-            docker tag schiff-repo:1 352708296901.dkr.ecr.eu-west-2.amazonaws.com/schiff-repo:latest
+            docker tag schiff-repo:1 352708296901.dkr.ecr.eu-west-2.amazonaws.com/schiff-repo:1
 
             docker push 352708296901.dkr.ecr.eu-west-2.amazonaws.com/schiff-repo:1
        '''
