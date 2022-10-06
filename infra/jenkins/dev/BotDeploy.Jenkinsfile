@@ -29,12 +29,9 @@ pipeline {
                     sh '''
                     K8S_CONFIGS=infra/k8s
 
-                    BOT_IMAGE_NAME=$(echo $BOT_IMAGE_NAME | sed -e "s/[\/&]/\\&/g")
-
-                    # replace registry url and image name placeholders in yaml
-                    sed -i "s/{{APP_ENV}}/$APP_ENV/g" $K8S_CONFIGS/bot.yaml
-                    sed -i "s/{{BOT_IMAGE}}/$BOT_IMAGE_NAME/g" $K8S_CONFIGS/bot.yaml
-                    sed -i "s/{{TELEGRAM_TOKEN}}/$TELEGRAM_TOKEN/g" $K8S_CONFIGS/bot.yaml
+                    bash common/replaceInFile.sh $K8S_CONFIGS/bot.yaml APP_ENV $APP_ENV
+                    bash common/replaceInFile.sh $K8S_CONFIGS/bot.yaml BOT_IMAGE $BOT_IMAGE_NAME
+                    bash common/replaceInFile.sh $K8S_CONFIGS/bot.yaml TELEGRAM_TOKEN $TELEGRAM_TOKEN
 
                     # apply the configurations to k8s cluster
                     kubectl apply --kubeconfig ${KUBECONFIG} -f $K8S_CONFIGS/bot.yaml
