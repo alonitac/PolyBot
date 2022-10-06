@@ -31,6 +31,8 @@ pipeline {
 
                     bash common/replaceInFile.sh $K8S_CONFIGS/bot.yaml APP_ENV $APP_ENV
                     bash common/replaceInFile.sh $K8S_CONFIGS/bot.yaml BOT_IMAGE $BOT_IMAGE_NAME
+
+                    TELEGRAM_TOKEN=$(echo $TELEGRAM_TOKEN | base64)
                     bash common/replaceInFile.sh $K8S_CONFIGS/bot.yaml TELEGRAM_TOKEN $TELEGRAM_TOKEN
 
                     # apply the configurations to k8s cluster
