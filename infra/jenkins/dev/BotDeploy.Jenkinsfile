@@ -29,6 +29,8 @@ pipeline {
                     sh '''
                     K8S_CONFIGS=infra/k8s
 
+                    BOT_IMAGE_NAME=$(echo $BOT_IMAGE_NAME | sed -e 's/[\/&]/\\&/g')
+
                     # replace registry url and image name placeholders in yaml
                     sed -i "s/{{APP_ENV}}/$APP_ENV/g" $K8S_CONFIGS/bot.yaml
                     sed -i "s/{{BOT_IMAGE}}/$BOT_IMAGE_NAME/g" $K8S_CONFIGS/bot.yaml
