@@ -1,0 +1,4 @@
+{
+  "aws_region": "eu-north-1",
+  "bot_to_worker_queue_name": "alonit-queue"
+}

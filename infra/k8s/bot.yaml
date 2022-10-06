@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bot-app-{{APP_ENV}}
+  namespace: {{APP_ENV}}
+  labels:
+    app: bot-app-{{APP_ENV}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bot-app-{{APP_ENV}}
+  template:
+    metadata:
+      labels:
+        app: bot-app-{{APP_ENV}}
+    spec:
+      containers:
+        - name: bot-app-{{APP_ENV}}
+          image: {{BOT_IMAGE}}
+          volumeMounts:
+            - name: bot-token
+              mountPath: "/app/.telegramToken"
+              readOnly: true
+      volumes:
+        - name: bot-token
+          secret:
+            secretName: telegram-bot-token
+            items:
+              - key: token
+                path: "/app/.telegramToken"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: telegram-bot-token
+  namespace: {{APP_ENV}}
+type: Opaque
+data:
+  token: {{TELEGRAM_TOKEN}}

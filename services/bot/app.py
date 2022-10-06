@@ -1,11 +1,8 @@
 import json
-import threading
-# pylint: disable=import-error
 import botocore
 from telegram.ext import Updater, MessageHandler, Filters
 from loguru import logger
 import boto3
-from common.utils import calc_backlog_per_instance
 
 
 class Bot:
@@ -53,10 +50,6 @@ class QuoteBot(Bot):
 class YoutubeObjectDetectBot(Bot):
     def __init__(self, token):
         super().__init__(token)
-        threading.Thread(
-            target=calc_backlog_per_instance,
-            args=(workers_queue, asg, config.get("autoscaling_group_name"))
-        ).start()
 
     def _message_handler(self, update, context):
         try:
@@ -76,15 +69,14 @@ class YoutubeObjectDetectBot(Bot):
 
 
 if __name__ == '__main__':
-    with open('../.telegramToken') as f:
+    with open('.telegramToken') as f:
         _token = f.read()
 
-    with open('config.json') as f:
+    with open('common/config.json') as f:
         config = json.load(f)
 
     sqs = boto3.resource('sqs', region_name=config.get('aws_region'))
     workers_queue = sqs.get_queue_by_name(QueueName=config.get('bot_to_worker_queue_name'))
-    asg = boto3.client('autoscaling', region_name=config.get('aws_region'))
 
     my_bot = YoutubeObjectDetectBot(_token)
     my_bot.start()
