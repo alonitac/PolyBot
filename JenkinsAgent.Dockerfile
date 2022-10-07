@@ -4,11 +4,9 @@ RUN yum update -y \
   && yum install -y unzip \
   && unzip awscliv2.zip \
   && ./aws/install --bin-dir /aws-cli-bin/
-
 RUN mkdir /snyk && cd /snyk \
     && curl https://static.snyk.io/cli/v1.666.0/snyk-linux -o snyk \
     && chmod +x ./snyk
-
 
 FROM jenkins/agent
 COPY --from=docker /usr/local/bin/docker /usr/local/bin/
