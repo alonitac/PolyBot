@@ -50,7 +50,6 @@ pipeline {
                 }
             }
         }
-
         stage('Trigger Deploy') {
             steps {
                 build job: 'BotDeploy', wait: false, parameters: [
