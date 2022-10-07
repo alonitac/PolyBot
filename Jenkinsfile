@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             label 'amip-jenkins-test'
-            image '352708296901.dkr.ecr.eu-north-1.amazonaws.com/amip-bot-jenkins-agent:1'
+            image '352708296901.dkr.ecr.eu-north-1.amazonaws.com/amip-jenkins-agent:1'
             args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
