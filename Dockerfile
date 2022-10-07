@@ -1,4 +1,4 @@
-FROM python:3.8.12-slim-buster
+FROM python:3.9-slim
 LABEL app=bot
 WORKDIR /src
 COPY . /src
