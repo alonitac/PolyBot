@@ -22,7 +22,7 @@ pipeline {
             echo "4"
 
             docker push 352708296901.dkr.ecr.eu-west-2.amazonaws.com/schiff-repo:1
-            echo "5"
+            echo "  5   "
        '''
             }
         }
