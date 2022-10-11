@@ -30,7 +30,7 @@ spec:
           image: {{BOT_IMAGE}}
           volumeMounts:
             - name: bot-token
-              mountPath: "/app/.telegramToken"
+              mountPath: "/app/secrets"
               readOnly: true
       volumes:
         - name: bot-token

@@ -1,6 +1,7 @@
 pipeline {
     agent {
         docker {
+            // TODO build & push your Jenkins agent image, place the URL here
             image '<jenkins-agent-image>'
             args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
         }
@@ -9,6 +10,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                // TODO dev bot build stage
                 sh '''
                 echo "building..."
                 '''
