@@ -1,4 +1,5 @@
 {
-  "aws_region": "eu-north-1",
-  "bot_to_worker_queue_name": "alonit-queue"
+  "aws_region": "<region-id>",
+  "videos_bucket": "<videos-bucket>",
+  "bot_to_worker_queue_name": "<sqs-queue>"
 }
