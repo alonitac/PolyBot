@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             // TODO build & push your Jenkins agent image, place the URL here
-            image '<jenkins-agent-image>'
+            image '352708296901.dkr.ecr.eu-north-1.amazonaws.com/alonit-jenkins-agent:latest'
             args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
@@ -19,7 +19,7 @@ pipeline {
         stage('Bot Deploy') {
             steps {
                 withCredentials([
-                    string(credentialsId: 'dev/telegram-bot-token', variable: 'TELEGRAM_TOKEN'),
+                    string(credentialsId: 'telegram-bot-token', variable: 'TELEGRAM_TOKEN'),
                     file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')
                 ]) {
                     sh '''
