@@ -1,6 +1,4 @@
-import json
-
-from youtube_dl import YoutubeDL
+from yt_dlp import YoutubeDL
 
 
 def search_download_youtube_video(video_name, num_results=1):
@@ -14,4 +12,3 @@ def search_download_youtube_video(video_name, num_results=1):
         videos = ydl.extract_info(f"ytsearch{num_results}:{video_name}", download=True)['entries']
 
     return [ydl.prepare_filename(video) for video in videos]
-
