@@ -7,7 +7,6 @@ pipeline {
         IMAGE_NAME = "amip-bot"
     }
 
-
     stages {
         stage('Build') {
             steps {
