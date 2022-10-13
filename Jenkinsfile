@@ -4,7 +4,7 @@ pipeline {
     environment {
         REGISTRY_URL= "352708296901.dkr.ecr.eu-west-2.amazonaws.com"
         IMAGE_TAG = "0.0.$BUILD_NUMBER"
-        IMAGE_NAME = schiff-repo
+        IMAGE_NAME = "schiff-repo"
     }
 
     stages {
