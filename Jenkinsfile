@@ -13,7 +13,9 @@ pipeline {
                 sh 'echo building...'
 
         }
+    }
 
+    
 //         stage('Build Bot app') {
 //             steps {
 //                     sh '''
