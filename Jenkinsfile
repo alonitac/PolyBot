@@ -17,24 +17,15 @@ pipeline {
         }
 
         stage('Build Bot app') {
-   steps {
-       sh '''
+            steps {
+                    sh '''
             aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin $REGISTRY_URL
             docker build -t $IMAGE_NAME .
             docker tag $IMAGE_NAME $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
             docker push $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
-       '''
+            '''
             }
         }
-        stage('Stage II') {
-            steps {
-                sh 'echo "stage II..."'
-            }
-        }
-        stage('Stage III ...') {
-            steps {
-                sh 'echo echo "stage III..."'
-            }
-        }
-    }
 
+    }
+}
