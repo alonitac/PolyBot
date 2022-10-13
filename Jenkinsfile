@@ -1,28 +1,28 @@
 pipeline {
     agent any
 
+    enviroment {
+        REGISTRY_URL= "352708296901.dkr.ecr.eu-west-2.amazonaws.com"
+        IMAGE_TAG = "0.0.$BUILD_NUMBER"
+        IMAGE_NAME = schiff-repo
+
+
+    }
+
     stages {
-        stage('Build') {
+        stage('ECHOING') {
             steps {
                 sh 'echo building...'
-                sh 'echo what am i doing?'
-            }
+
         }
 
         stage('Build Bot app') {
    steps {
        sh '''
-            echo "build image"
-            echo "1"
-            aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 352708296901.dkr.ecr.eu-west-2.amazonaws.com
-            echo "2"
-            docker build -t schiff-repo:1 .
-            echo "3"
-            docker tag schiff-repo:1 352708296901.dkr.ecr.eu-west-2.amazonaws.com/schiff-repo:1
-            echo "4"
-
-            docker push 352708296901.dkr.ecr.eu-west-2.amazonaws.com/schiff-repo:1
-            echo "  5   "
+            aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin $REGISTRY_URL
+            docker build -t $IMAGE_NAME .
+            docker tag $IMAGE_NAME $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
+            docker push $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
        '''
             }
         }
