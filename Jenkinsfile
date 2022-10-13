@@ -14,8 +14,8 @@ pipeline {
 
         }
     }
-
-    
+    }
+}
 //         stage('Build Bot app') {
 //             steps {
 //                     sh '''
