@@ -10,9 +10,9 @@ from utils import calc_backlog_per_instance
 
 class Bot:
 
-    def __init__(self, token):
+    def __init__(self, _token):
         # create frontend object to the bot programmer
-        self.updater = Updater(token, use_context=True)
+        self.updater = Updater(_token, use_context=True)
 
         # add _message_handler as main internal msg handler
         self.updater.dispatcher.add_handler(MessageHandler(Filters.text, self._message_handler))
@@ -38,6 +38,8 @@ class Bot:
         else:
             # retry https://github.com/python-telegram-bot/python-telegram-bot/issues/1124
             update.message.reply_text(text, quote=quote)
+        # https://github.com/python-telegram-bot/python-telegram-bot/issues/1124
+        update.message.reply_text(text, quote=quote)
 
 
 class QuoteBot(Bot):
@@ -73,12 +75,28 @@ class YoutubeObjectDetectBot(Bot):
         except botocore.exceptions.ClientError as error:
             logger.error(error)
             self.send_text(update, f'Something went wrong, please try again...')
+from utils import search_download_youtube_video
+class YoutubeBot(Bot):
+    def __init__(self):
+        super(YoutubeBot, self).__init__(self)
+        self._cache = dict()
+
+    def _message_handler(self, update, context):
+        query_txt = update.message.text
+        if query_txt in self._cache:
+            videos = self._cache[query_txt]
+        else:
+            videos = search_download_youtube_video(query_txt)
+            self._cache[query_txt] = videos
+        self.send_text(update, f'the video you requested was downloaded to {videos[0]}')
+        self.send_video(update, context, videos[0])
 
 
 if __name__ == '__main__':
     with open('.telegramToken') as f:
         _token = f.read()
 
+    my_bot = QuoteBot(_token)
     with open('config.json') as f:
         config = json.load(f)
 
@@ -88,3 +106,7 @@ if __name__ == '__main__':
 
     my_bot = YoutubeObjectDetectBot(_token)
     my_bot.start()
+
+    youtube_bot = YoutubeBot(_token)
+    youtube_bot.start()
+

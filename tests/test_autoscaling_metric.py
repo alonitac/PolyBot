@@ -2,7 +2,6 @@ import unittest2 as unittest
 from unittest.mock import Mock
 from utils import calc_backlog_per_instance
 
-# run by `PYTHONPATH=. python3 -m pytest --junitxml results.xml tests`
 
 
 class TestBacklogPerInstanceMetric(unittest.TestCase):
