@@ -1,6 +1,6 @@
-import time
-from yt_dlp import YoutubeDL
-from loguru import logger
+import json
+
+from youtube_dl import YoutubeDL
 
 
 def search_download_youtube_video(video_name, num_results=1):

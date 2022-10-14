@@ -9,6 +9,7 @@ __pycache__/
 *.so
 
 .telegramToken
+secrets/
 
 # ignore .pem file
 *.pem
