@@ -12,7 +12,6 @@ pipeline {
         disableConcurrentBuilds()
         timestamps()
     }
-
     environment {
         REGISTRY_URL = "352708296901.dkr.ecr.eu-north-1.amazonaws.com"
         IMAGE_TAG = "0.0.$BUILD_NUMBER"
