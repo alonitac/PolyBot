@@ -54,12 +54,7 @@ pipeline {
                 }
             }
         }
-
-        stage('Trigger Deploy') {
-            steps {
-                build job: 'BotDeploy', wait: false, parameters: [
-                    string(name: 'BOT_IMAGE_NAME', value: "352708296901.dkr.ecr.eu-north-1.amazonaws.com/alonit-bot:0.0.${BUILD_NUMBER}")
-        stage('Trigger Deploy') {
+            stage('Trigger Deploy') {
             steps {
                 build job: 'BotDeploy', wait: false, parameters: [
                     string(name: 'BOT_IMAGE_NAME', value: "352708296901.dkr.ecr.eu-north-1.amazonaws.com/amip-bot:0.0.${BUILD_NUMBER}")
