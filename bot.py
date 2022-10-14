@@ -38,8 +38,6 @@ class Bot:
         else:
             # retry https://github.com/python-telegram-bot/python-telegram-bot/issues/1124
             update.message.reply_text(text, quote=quote)
-        # https://github.com/python-telegram-bot/python-telegram-bot/issues/1124
-        update.message.reply_text(text, quote=quote)
 
 class QuoteBot(Bot):
     def _message_handler(self, update, context):
