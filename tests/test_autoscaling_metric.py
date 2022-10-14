@@ -2,8 +2,6 @@ import unittest2 as unittest
 from unittest.mock import Mock
 from utils import calc_backlog_per_instance
 
-
-
 class TestBacklogPerInstanceMetric(unittest.TestCase):
     def setUp(self):
         self.sqs_queue_client = Mock()
