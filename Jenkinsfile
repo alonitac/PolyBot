@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('ECHOING') {
             steps {
-                sh 'echo building...'
+                sh 'echo building new ...'
 
         }
     }
