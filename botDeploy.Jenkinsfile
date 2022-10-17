@@ -29,6 +29,23 @@ pipeline {
             cat hosts
             '''
         }
+        
+    }
+        stage('Ansible Bot Deploy') {
+        environment {
+        ANSIBLE_HOST_KEY_CHECKING = 'False'
+        REGISTRY_URL = "352708296901.dkr.ecr.eu-west-2.amazonaws.com"
+        REGISTRY_REGION = 'eu-west-2'
+        }
+
+        steps {
+        withCredentials([sshUserPrivateKey(credentialsId: 'bot-inst', usernameVariable: 'ssh_user', keyFileVariable: 'privatekey')]) {
+            sh '''
+            /var/lib/jenkins/.local/bin/ansible-playbook botDeploy.yaml --extra-vars "registry_region=$REGISTRY_REGION  registry_url=$REGISTRY_URL bot_image=$BOT_IMAGE" --user=${ssh_user} -i hosts --private-key ${privatekey}
+            '''
+        }
+    }
 }
+        
     }
 }
