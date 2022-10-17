@@ -2,12 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('ECHOING') {
-            steps {
-                sh ' echo building...'
-
-        }
-    }
         stage("Install Ansible") {
             steps {
                 sh 'python3 -m pip install ansible'
