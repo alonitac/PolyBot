@@ -9,6 +9,7 @@ pipeline {
 
     }
     stages {
+
         stage('Build Bot app') {
             steps {
                 sh """
@@ -18,25 +19,26 @@ pipeline {
                     docker push $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
                 """
             }
-        }
-        stage('Stage II') {
-            steps {
-                sh 'echo "stage II..."'
+
+            post{
+                always{
+                    sh "docker image prune -a -f"
+                }
             }
         }
+
+        stage('Trigger Deploy') {
+            steps {
+                build job: 'BotDeploy', wait: false, parameters: [
+                    string(name: 'BOT_IMAGE_NAME', value: "${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}")
+                    ]
+            }
+        }
+
         stage('Stage III ...') {
             steps {
                 sh 'echo echo "stage III..."'
             }
         }
-    }
-    post{
-    always{
-    sh """
-
-    docker image prune -a -f
-
-    """
-    }
     }
 }
