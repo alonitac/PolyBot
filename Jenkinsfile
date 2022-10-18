@@ -1,5 +1,11 @@
+
 pipeline {
     agent any
+    options {
+        buildDiscarder(logRotator(daysToKeepStr: '30'))
+        disableConcurrentBuilds()
+        timestamps()
+    }
 
     environment {
         REGISTRY_URL= "352708296901.dkr.ecr.eu-west-2.amazonaws.com"
