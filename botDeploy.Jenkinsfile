@@ -7,13 +7,13 @@ pipeline{
     stages{
 
         stage ("Deploy"){
-            step{
+            step2{
                 sh """
                 echo "stage 1 deploy"
                 """
             }
 
-            step{
+            step2{
                 sh """
                 echo "stage 2 deploy"
                 """
