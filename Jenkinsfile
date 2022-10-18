@@ -34,7 +34,7 @@ pipeline {
     always{
     sh """
 
-    docker container ls -aq | xargs docker container rm -f
+    docker container ls -aq | xargs docker rm -f
     docker image ls -aq | xargs docker image rm -f
 
     """
