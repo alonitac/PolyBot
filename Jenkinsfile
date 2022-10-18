@@ -3,9 +3,9 @@ pipeline {
 
     environment {
 
-        REGISTRY_URL = "352708296901.dkr.ecr.us-east-1.amazonaws.com"
+        REGISTRY_URL = "352708296901.dkr.ecr.ap-northeast-1.amazonaws.com"
         IMAGE_TAG = "0.0.${BUILD_NUMBER}"
-        IMAGE_NAME = "shaypolybotecr"
+        IMAGE_NAME = "shay_polybot_ecr"
 
     }
     stages {
