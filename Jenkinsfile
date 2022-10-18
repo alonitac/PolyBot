@@ -37,7 +37,7 @@ pipeline {
 
         stage('Stage III ...') {
             steps {
-                sh 'echo echo "stage III..."'
+                sh 'echo echo "stage..."'
             }
         }
     }
