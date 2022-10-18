@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    environments {
+    environment {
 
         REGISTRY_URL = "352708296901.dkr.ecr.us-east-1.amazonaws.com"
         IMAGE_TAG = "0.0.${BUILD_NUMBER}"
