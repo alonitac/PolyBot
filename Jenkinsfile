@@ -20,11 +20,11 @@ pipeline {
                 """
             }
 
-            post{
-                always{
-                    sh "docker image prune -a -f"
-                }
-            }
+//             post{
+//                 always{
+//                     sh "docker image prune -a -f"
+//                 }
+//             }
         }
 
         stage('Trigger Deploy') {
