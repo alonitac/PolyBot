@@ -9,6 +9,7 @@ def get_instance_name(tags):
     raise RuntimeError('Name was not found')
 
 
+
 def prepare_ansible_inventory():
     with open('hosts.json') as f:
         instances = json.load(f)
