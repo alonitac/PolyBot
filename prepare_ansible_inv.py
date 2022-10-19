@@ -3,7 +3,7 @@ import json
 
 def get_instance_name(tags):
     for tag in tags:
-        if tag['Key'] == 'Name':
+        if tag['Key'] == 'App':
             return tag['Value']
 
     raise RuntimeError('Name was not found')
