@@ -1,21 +1,14 @@
 properties([parameters([text('BOT_IMAGE_NAME')])])
 
-pipeline{
-
+pipeline {
     agent any
 
     stages{
 
         stage ('Deploy') {
-            steps{
+            steps {
                 sh """
                 echo "stage 1 deploy"
-                """
-            }
-
-            steps{
-                sh """
-                echo "stage 2 deploy"
                 """
             }
         }
