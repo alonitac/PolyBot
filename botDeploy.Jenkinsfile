@@ -5,11 +5,10 @@ pipeline {
 
     stages{
 
-        stage ('Deploy') {
+        stage("Install Ansible") {
             steps {
-                sh """
-                echo "stage 1 deploy"
-                """
+                sh 'python3 -m pip install ansible'
+                sh '/var/lib/jenkins/.local/bin/ansible-galaxy collection install community.general'
             }
         }
     }
