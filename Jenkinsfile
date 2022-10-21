@@ -22,7 +22,7 @@ pipeline {
     stages {
         stage('ECHOING') {
             steps {
-                sh 'echo building new ...'
+                sh 'echo policy attached new ...'
 
         }
     }
