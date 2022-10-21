@@ -1,6 +1,7 @@
 pipeline {
-    agent{ any
-    }
+
+    agent any
+    
     stages {
         stage("Install Ansible") {
             steps {
