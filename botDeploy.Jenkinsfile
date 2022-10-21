@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image '<image-url>'
-            args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
     stages {
         stage("Install Ansible") {
             steps {
