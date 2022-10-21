@@ -1,7 +1,11 @@
 
 pipeline {
-    agent any
-    options {
+    agent {
+        docker {
+            image '352708296901.dkr.ecr.eu-west-2.amazonaws.com/schiff-agent-jenkins:1'
+            args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }    options {
         buildDiscarder(logRotator(daysToKeepStr: '30'))
         disableConcurrentBuilds()
         timestamps()
