@@ -1,4 +1,5 @@
 pipeline {
+    
     agent {
     docker {
         image '352708296901.dkr.ecr.eu-central-1.amazonaws.com/shlomigd-jenkins-agent:1'
