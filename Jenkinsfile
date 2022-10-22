@@ -11,6 +11,7 @@ pipeline {
         buildDiscarder(logRotator(daysToKeepStr: '30'))
         disableConcurrentBuilds()
         timestamps()
+        
     }
 
     environment {
