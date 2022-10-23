@@ -29,9 +29,9 @@ pipeline {
                 docker build -t $IMAGE_NAME:$IMAGE_TAG .
                 '''
 
-                withCredentials([string(credentialsId: 'synk',variable: 'SNYK_TOKEN')]) {
+                withCredentials([string(credentialsId: 'snyk',variable: 'SNYK_TOKEN')]) {
                 sh '''
-                synk container test $IMAGE_NAME:$IMAGE_TAG --severity-treshold=high --file=Dockerfile
+                snyk container test $IMAGE_NAME:$IMAGE_TAG --severity-treshold=high --file=Dockerfile
                 '''
                 }
                 sh '''
