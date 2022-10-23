@@ -21,22 +21,15 @@ pipeline {
     }
 
     stages {
-        stage('ECHOING') {
-            steps {
-                sh 'echo policy attached new ...'
-
-        }
-    }
-    
 
         stage('Build Bot app') {
             steps {
                 sh '''
                 aws ecr get-login-password --region eu-west-2 |  docker login --username AWS --password-stdin $REGISTRY_URL
-                docker build -t $IMAGE_NAME .
+                docker build -t $IMAGE_NAME:$IMAGE_TAG .
                 '''
 
-                withCredentials([string(credentialsId: 'snyk',variable: 'SNYK_TOKEN')]) {
+                withCredentials([string(credentialsId: 'synk',variable: 'SNYK_TOKEN')]) {
                 sh '''
                 synk container test $IMAGE_NAME:$IMAGE_TAG --severity-treshold=high --file=Dockerfile
                 '''
