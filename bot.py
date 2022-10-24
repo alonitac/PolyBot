@@ -7,7 +7,6 @@ from loguru import logger
 import boto3
 from utils import calc_backlog_per_instance
 
-
 class Bot:
 
     def __init__(self, token):
