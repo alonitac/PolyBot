@@ -22,7 +22,7 @@ pipeline {
 
             post{
                 always{
-                    sh "docker image prune -a -f --filter "until=30m""
+                    sh 'docker image prune -a -f --filter "until=30m"'
                 }
             }
         }
