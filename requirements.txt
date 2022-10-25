@@ -5,3 +5,4 @@ pytest
 unittest2
 pylint_junit
 pylint
+insecure
