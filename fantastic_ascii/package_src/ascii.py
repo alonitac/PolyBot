@@ -1,5 +1,4 @@
 import time
-
 def joy_sleep(t):
     time.sleep(t)
 
