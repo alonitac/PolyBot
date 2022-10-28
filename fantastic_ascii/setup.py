@@ -13,6 +13,5 @@ setup_args = dict(
     author_email='example@example.com'
 )
 
-
 if __name__ == '__main__':
     setup(**setup_args)
