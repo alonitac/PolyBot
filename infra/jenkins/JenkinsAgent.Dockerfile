@@ -6,6 +6,9 @@ RUN yum update -y \
   && yum install -y unzip \
   && unzip awscliv2.zip \
   && ./aws/install --bin-dir /aws-cli-bin/
+RUN mkdir /snyk && cd /snyk \
+    && curl https://static.snyk.io/cli/v1.666.0/snyk-linux -o snyk \
+    && chmod +x ./snyk
 
 # kubectl
 RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
