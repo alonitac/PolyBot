@@ -40,6 +40,7 @@ pipeline {
                     sh '''
                         snyk container test $IMAGE_NAME:$IMAGE_TAG --severity-threshold=high --file=Dockerfile
                     '''
+                }
             }
 
             post{
