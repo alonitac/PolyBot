@@ -36,7 +36,7 @@ pipeline {
 //             }
 //
 //             steps {
-                withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'TOKEN')]) {
+                withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
                     sh """
                         snyk container test $IMAGE_NAME:$IMAGE_TAG --severity-threshold=high --file=Dockerfile
                     """
