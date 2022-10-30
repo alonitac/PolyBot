@@ -33,13 +33,13 @@ pipeline {
                     docker tag $IMAGE_NAME:$IMAGE_TAG $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
                     docker push $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
                 """
-            }
-
-            steps {
+//             }
+//
+//             steps {
                 withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'TOKEN')]) {
-                    sh '''
+                    sh """
                         snyk container test $IMAGE_NAME:$IMAGE_TAG --severity-threshold=high --file=Dockerfile
-                    '''
+                    """
                 }
             }
 
