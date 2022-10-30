@@ -35,6 +35,13 @@ pipeline {
                 """
             }
 
+            steps {
+                withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'TOKEN')]) {
+                    sh '''
+                        snyk container test $IMAGE_NAME:$IMAGE_TAG --severity-threshold=high --file=Dockerfile
+                    '''
+            }
+
             post{
                 always{
                     sh 'docker image prune -a -f --filter "until=30m"'
