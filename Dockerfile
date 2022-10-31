@@ -5,6 +5,9 @@ WORKDIR /app/
 COPY . /app
 
 RUN pip install --upgrade pip \
-    && pip install -r requirements.txt
+    && pip install -r requirements.txt \
+
+RUN apt-get update \
+    && apt-get expat
 
 CMD ["python3", "worker.py"]
