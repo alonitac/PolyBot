@@ -5,10 +5,10 @@ WORKDIR /app/
 COPY . /app
 
 RUN apt-get update \
-    && apt-get install expat \
+    && apt-get install expat
 
 RUN pip install --upgrade pip \
-    && pip install -r requirements.txt \
+    && pip install -r requirements.txt
 
 
 CMD ["python3", "worker.py"]
