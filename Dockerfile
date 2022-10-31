@@ -4,10 +4,11 @@ WORKDIR /app/
 
 COPY . /app
 
+RUN apt-get update \
+    && apt-get install expat \
+
 RUN pip install --upgrade pip \
     && pip install -r requirements.txt \
 
-RUN apt-get update \
-    && apt-get install expat \
 
 CMD ["python3", "worker.py"]
