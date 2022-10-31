@@ -8,6 +8,6 @@ RUN pip install --upgrade pip \
     && pip install -r requirements.txt \
 
 RUN apt-get update \
-    && apt-get expat
+    && apt-get install expat \
 
 CMD ["python3", "worker.py"]
