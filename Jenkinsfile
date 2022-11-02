@@ -1,6 +1,7 @@
 pipeline {
     agent {
         docker {
+            label 'general'
             image '352708296901.dkr.ecr.us-east-1.amazonaws.com/shay-jenkins-agent:1'
             args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
         }
@@ -34,12 +35,12 @@ pipeline {
                     docker push $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
                 """
 
-                withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
-                    sh """
-                        snyk ignore --id=SNYK-DEBIAN10-EXPAT-3061092
-                        snyk container test  $IMAGE_NAME:$IMAGE_TAG  --severity-threshold=high --file=Dockerfile
-                    """
-                }
+//                 withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
+//                     sh """
+//                         snyk ignore --id=SNYK-DEBIAN10-EXPAT-3061092
+//                         snyk container test  $IMAGE_NAME:$IMAGE_TAG  --severity-threshold=high --file=Dockerfile
+//                     """
+//                 }
             }
 
             post{
