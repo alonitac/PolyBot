@@ -12,7 +12,6 @@ pipeline {
             }
         }
 
-
         stage("Generate Ansible Inventory") {
             environment {
                 BOT_EC2_APP_TAG = "shay-poltbot-prod"
