@@ -38,6 +38,7 @@ pipeline {
                     sh """
                         snyk ignore --id=SNYK-DEBIAN10-EXPAT-3061092
                         snyk container test  $IMAGE_NAME:$IMAGE_TAG  --severity-threshold=high --file=Dockerfile
+
                     """
                 }
             }
