@@ -34,7 +34,6 @@ pipeline {
                     docker tag $IMAGE_NAME:$IMAGE_TAG $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
                     docker push $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
                 """
-
 //                 withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
 //                     sh """
 //                         snyk ignore --id=SNYK-DEBIAN10-EXPAT-3061092
