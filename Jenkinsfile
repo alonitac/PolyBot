@@ -41,11 +41,11 @@ pipeline {
 //                 }
             }
 
-            post{
-                always{
-                    sh 'docker image prune -a -f --filter "until=30m"'
-                }
-            }
+//             post{
+//                 always{
+//                     sh 'docker image prune -a -f --filter "until=30m"'
+//                 }
+//             }
         }
 
         stage('Trigger Deploy') {
