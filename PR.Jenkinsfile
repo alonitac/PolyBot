@@ -4,7 +4,10 @@ pipeline {
     stages {
         stage('Unittest') {
             steps {
-                sh 'python3 -m pytest --junitxml results.xml tests'
+                sh """
+                pip3 install -r requirements.txt
+                python3 -m pytest --junitxml results.xml tests
+                """
             }
 
             post {
