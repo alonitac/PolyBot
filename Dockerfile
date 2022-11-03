@@ -1,7 +1,14 @@
-FROM python:3.8.12-slim-buster
+FROM python:3.8.15-slim-buster
 
-# YOUR COMMANDS HEREe
-# ....
-# ....
+WORKDIR /app/
 
-CMD ["python3", "bot.py"]
+COPY . /app
+
+RUN apt-get update \
+    && apt-get install expat
+
+RUN pip install --upgrade pip \
+    && pip install -r requirements.txt
+
+
+CMD ["python3", "worker.py"]
