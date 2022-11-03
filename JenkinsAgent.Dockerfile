@@ -10,9 +10,6 @@ RUN mkdir /snyk && cd /snyk \
     && chmod +x ./snyk
 
 FROM jenkins/agent
-RUN pip install --upgrade pip \
-RUN  pip install pytest \
-    && pip install unittest2
 COPY --from=docker /usr/local/bin/docker /usr/local/bin/
 COPY --from=installer /usr/local/aws-cli/ /usr/local/aws-cli/
 COPY --from=installer /aws-cli-bin/ /usr/local/bin/
