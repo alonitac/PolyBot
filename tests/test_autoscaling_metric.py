@@ -7,6 +7,7 @@ class TestBacklogPerInstanceMetric(unittest.TestCase):
     def setUp(self):
         self.sqs_queue_client = Mock()
         self.asg_client = Mock()
+        self.asg_group_name = Mock()
 
     def test_no_worker_full_queue(self):
         self.sqs_queue_client.attributes = {
@@ -19,4 +20,4 @@ class TestBacklogPerInstanceMetric(unittest.TestCase):
             }]
         })
 
-        self.assertEqual(calc_backlog_per_instance(self.sqs_queue_client, self.asg_client, None), 99)
+        self.assertEqual(calc_backlog_per_instance(self.sqs_queue_client, self.asg_client, self.asg_group_name), 99)

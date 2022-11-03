@@ -34,8 +34,6 @@ def calc_backlog_per_instance(sqs_queue_client, asg_client, asg_group_name):
 
         logger.info(f'backlog per instance: {backlog_per_instance}')
 
-        # TODO send the backlog_per_instance metric to cloudwatch
-
         boto3.client('cloudwatch').put_metric_data(
             MetricData=[
                 {
