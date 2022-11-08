@@ -5,7 +5,6 @@ import boto3
 import json
 from yt_dlp import YoutubeDL
 
-
 def search_download_youtube_video(video_name, num_results=1):
     """
     This function downloads the first num_results search results from Youtube
