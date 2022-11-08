@@ -1,8 +1,12 @@
+<<<<<<< HEAD:utils.py
 import time
 from yt_dlp import YoutubeDL
 from loguru import logger
 import boto3
 import json
+=======
+from yt_dlp import YoutubeDL
+>>>>>>> remotes/upstream/main:common/utils.py
 
 
 def search_download_youtube_video(video_name, num_results=1):
@@ -16,6 +20,7 @@ def search_download_youtube_video(video_name, num_results=1):
         videos = ydl.extract_info(f"ytsearch{num_results}:{video_name}", download=True)['entries']
 
     return [ydl.prepare_filename(video) for video in videos]
+<<<<<<< HEAD:utils.py
 
 
 def calc_backlog_per_instance(sqs_queue_client, asg_client, asg_group_name):
@@ -69,3 +74,5 @@ def calc_backlog_per_instance_periodically(sqs_queue_client, asg_client, asg_gro
         )
 
         time.sleep(60)
+=======
+>>>>>>> remotes/upstream/main:common/utils.py
