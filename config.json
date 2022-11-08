@@ -1,5 +1,0 @@
-{
-  "aws_region": "us-east-1" ,
-  "bot_to_worker_queue_name": "shay-polyb-queue",
-  "autoscaling_group_name": "shay-polybot-auto-scaling"
-}
