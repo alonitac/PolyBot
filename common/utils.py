@@ -33,7 +33,6 @@ def calc_backlog_per_instance(sqs_queue_client, asg_client, asg_group_name):
 
     return backlog_per_instance
 
-
 def calc_backlog_per_instance_periodically(sqs_queue_client, asg_client, asg_group_name):
     with open('config.json') as f:
         config = json.load(f)
