@@ -24,7 +24,6 @@ def calc_backlog_per_instance(sqs_queue_client, asg_client, asg_group_name):
     asg_size = asg_client.describe_auto_scaling_groups(AutoScalingGroupNames=[asg_group_name])['AutoScalingGroups'][0][
         'DesiredCapacity']
 
-
     if msgs_in_queue == 0:
         backlog_per_instance = 0
     elif asg_size == 0:
