@@ -18,12 +18,12 @@ def search_download_youtube_video(video_name, num_results=1):
 
     return [ydl.prepare_filename(video) for video in videos]
 
+
+# lets try a different approach!!!
 def calc_backlog_per_instance(sqs_queue_client, asg_client, asg_group_name):
     msgs_in_queue = int(sqs_queue_client.attributes.get('ApproximateNumberOfMessages'))
     asg_size = asg_client.describe_auto_scaling_groups(AutoScalingGroupNames=[asg_group_name])['AutoScalingGroups'][0][
         'DesiredCapacity']
-
-
 
     if msgs_in_queue == 0:
         backlog_per_instance = 0
@@ -33,6 +33,7 @@ def calc_backlog_per_instance(sqs_queue_client, asg_client, asg_group_name):
         backlog_per_instance = msgs_in_queue / asg_size
 
     return backlog_per_instance
+
 
 def calc_backlog_per_instance_periodically(sqs_queue_client, asg_client, asg_group_name):
     with open('config.json') as f:
