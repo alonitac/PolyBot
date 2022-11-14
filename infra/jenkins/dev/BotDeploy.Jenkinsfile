@@ -1,3 +1,5 @@
+properties([parameters([text('BOT_IMAGE_NAME')])])
+
 pipeline {
     agent {
         docker {
