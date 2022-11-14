@@ -1,4 +1,4 @@
-properties([parameters([text('BOT_IMAGE_NAME')])])
+properties([parameters([string(name: 'BOT_IMAGE_NAME', trim: true)])])
 
 pipeline {
     agent {
