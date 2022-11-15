@@ -68,5 +68,4 @@ def calc_backlog_per_instance_periodically(sqs_queue_client, asg_client, asg_gro
             ],
             Namespace='POLYBOT/WORKERS'
         )
-
         time.sleep(60)
