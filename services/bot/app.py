@@ -4,6 +4,7 @@ from telegram.ext import Updater, MessageHandler, Filters
 from loguru import logger
 import boto3
 
+
 class Bot:
 
     def __init__(self, token):
