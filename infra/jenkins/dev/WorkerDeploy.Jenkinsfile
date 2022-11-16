@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             label 'general'
-            image '352708296901.dkr.ecr.us-east-1.amazonaws.com/shay-polybot-jenkins-agent:1'
+            image '352708296901.dkr.ecr.us-east-1.amazonaws.com/shay-polybot-jenkins-agent:2'
             args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }

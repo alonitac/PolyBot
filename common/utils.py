@@ -20,7 +20,6 @@ def search_download_youtube_video(video_name, num_results=1):
 
 
 
-
 def calc_backlog_per_instance(sqs_queue_client, asg_client, asg_group_name):
     msgs_in_queue = int(sqs_queue_client.attributes.get('ApproximateNumberOfMessages'))
     asg_size = asg_client.describe_auto_scaling_groups(AutoScalingGroupNames=[asg_group_name])['AutoScalingGroups'][0][
