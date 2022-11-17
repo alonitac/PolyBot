@@ -6,7 +6,7 @@ pipeline {
             args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
-    // options used from - https://www.jenkins.io/doc/book/pipeline/syntax/
+    // options used from jenkins docs - https://www.jenkins.io/doc/book/pipeline/syntax/
     options {
     buildDiscarder(logRotator(daysToKeepStr: '30'))
     disableConcurrentBuilds()
@@ -52,7 +52,7 @@ pipeline {
             '''
         }
         // post used from docker docs - https://docs.docker.com/engine/reference/commandline/image_prune/
-        //The following removes images created more than 1 week ago for any case
+        //The following removes images created more than 1 week ago for any case, and sends a mail status notification
         post {
             always {
             sh '''
