@@ -19,6 +19,7 @@ pipeline {
     IMAGE_TAG = "0.0.$BUILD_NUMBER"
     WORKSPACE = "/var/lib/jenkins/workspace/BotBuild/services"
     ECR_REGISTRY = "352708296901.dkr.ecr.eu-central-1.amazonaws.com/yf-bot-reg"
+    TEAM_EMAIL = 'yuval.fid@gmail.com'
 
     }
 
@@ -43,7 +44,7 @@ pipeline {
         }
     }
 
-    stage('Continue_Build') {
+    stage('Continue_Build_Repost_Status') {
         steps {
             sh'''
             docker tag $IMAGE_NAME:$IMAGE_TAG $REGISTRY/$IMAGE_NAME:$IMAGE_TAG
@@ -62,14 +63,12 @@ pipeline {
          success {
             echo 'I succeeded!'
         }
-        unstable {
-            echo 'I am unstable :/'
-        }
+
         failure {
             echo 'I failed :('
-        }
-        changed {
-            echo 'Things were different before...'
+            mail to: '$TEAM_EMAIL',
+                 subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+                 body: "Something is wrong with ${env.BUILD_URL}"
         }
     }
 
