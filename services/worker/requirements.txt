@@ -6,3 +6,4 @@ unittest2
 
 pylint_junit
 pylint
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
