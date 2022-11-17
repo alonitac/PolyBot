@@ -38,8 +38,8 @@ pipeline {
     // used snyk container test from - https://docs.snyk.io/snyk-cli/commands/container-test
     stage('Snyx Check') {
     steps {
-            withCredentials([string(credentialsId: 'Snyx', variable: 'SNYK_TOKEN')]) {
-                sh 'snyk container test $IMAGE_NAME:$IMAGE_TAG --severity-threshold=critical --file=/home/ec2-user/workspace/dev/botBuild/services/bot/Dockerfile'
+            withCredentials([string(credentialsId: '', variable: '')]) {
+                sh ''
             }
         }
     }
