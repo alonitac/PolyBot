@@ -58,7 +58,7 @@ pipeline {
             always {
             sh '''
             echo 'One way or another, I have finished'
-            docker image prune -a --filter "until=24h"
+            docker image prune -a --filter "until=168"
             '''
             }
         }
