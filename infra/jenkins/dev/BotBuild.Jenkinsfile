@@ -19,14 +19,14 @@ pipeline {
     IMAGE_TAG = "0.0.$BUILD_NUMBER"
     WORKSPACE = "/var/lib/jenkins/workspace/BotBuild/services"
     ECR_REGISTRY = "352708296901.dkr.ecr.eu-central-1.amazonaws.com/yf-bot-reg"
-    TEAM_EMAIL = 'yuval.fid@gmail.com'
+    TEAM_EMAIL = 'yuval.fid@gmail.com' // email address example
 
     }
 
     stages {
         stage('Build') {
             steps {
-
+                // from jenkins demo build
                 sh '''
                 aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
                 cd /home/ec2-user/workspace/dev/botBuild/services/bot/
@@ -76,7 +76,7 @@ pipeline {
         stage('Trigger Deploy') {
             steps {
                 build job: 'botDeploy', wait: false, parameters: [
-                    string(name: 'BOT_IMAGE_NAME', value: "${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}")
+                    string(name: 'BOT_IMAGE_NAME', value: "${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}")
                 ]
             }
         }
