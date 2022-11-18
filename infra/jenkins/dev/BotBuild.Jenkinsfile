@@ -31,14 +31,13 @@ pipeline {
                 sh 'echo building...'
                 sh '''
                 aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
-                cd /home/ec2-user/workspace/dev/botBuild/services/bot/
                 docker build -t $IMAGE_NAME:$IMAGE_TAG .
 
                 '''
             }
         }
     // used snyk container test from - https://docs.snyk.io/snyk-cli/cli-reference and https://docs.snyk.io/snyk-cli/commands/container-test
-    stage('Snyx Check') {
+    stage('SNYK Check') {
     steps {
             withCredentials([string(credentialsId: '', variable: '')]) {
                 sh 'snyk container test $IMAGE_NAME:$IMAGE_TAG --severity-threshold=high --file=/home/ec2-user/workspace/dev/botBuild/services/bot/Dockerfile'
@@ -49,7 +48,7 @@ pipeline {
     stage('Continue_Build_Repost_Status') {
         steps {
             sh'''
-            docker tag $IMAGE_NAME:$IMAGE_TAG $REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+            docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
             docker push $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
             '''
         }
