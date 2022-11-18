@@ -2,3 +2,4 @@ python-telegram-bot>=13.11
 yt-dlp>=2022.6.29
 loguru
 boto3
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
