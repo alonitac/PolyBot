@@ -1,5 +1,5 @@
 {
-  "aws_region": "<region-id>",
-  "videos_bucket": "<videos-bucket>",
-  "bot_to_worker_queue_name": "<sqs-queue>"
+  "aws_region": "<eu-central-1",
+  "videos_bucket": "aws-ex1-yf",
+  "bot_to_worker_queue_name": "AWS-Ex-yf-queue"
 }
