@@ -20,7 +20,7 @@ pipeline {
     IMAGE_TAG = "0.0.$BUILD_NUMBER"
     WORKSPACE = "/var/lib/jenkins/workspace/BotBuild/services"
     ECR_REGISTRY = "352708296901.dkr.ecr.eu-central-1.amazonaws.com"
-    TEAM_EMAIL = 'yuval.fid@gmail.com' // email address example
+    TEAM_EMAIL = 'yuval.fid@gmail.com'
 
     }
 
