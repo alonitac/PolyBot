@@ -52,25 +52,16 @@ pipeline {
             '''
         }
         // post used from docker docs - https://docs.docker.com/engine/reference/commandline/image_prune/
-        //The following removes images created more than 1 week ago for any case, and sends a mail status notification
+        //The following removes images created more than 1 week ago for any case.
         post {
             always {
             sh '''
             echo 'One way or another, I have finished'
-            docker image prune -a --filter "until=168h"
+            docker image prune -a --filter "until=24h"
             '''
             }
-         success {
-            echo 'I succeeded!'
         }
-
-        failure {
-            echo 'I failed :('
-            mail to: '$TEAM_EMAIL',
-                 subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-                 body: "Something is wrong with ${env.BUILD_URL}"
-        }
-    }
+   }
 
 
         stage('Trigger Deploy') {
