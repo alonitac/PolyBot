@@ -14,7 +14,7 @@ pipeline {
 
     environment {
 
-        REGISTRY_URL = "352708296901.dkr.ecr.us-east-1.amazonaws.com"
+        REGISTRY_URL = "3352708296901.dkr.ecr.us-east-1.amazonaws.com"
         IMAGE_TAG = "0.0.${BUILD_NUMBER}"
         IMAGE_NAME = "shay-polybot-cicd-worker"
 
@@ -28,7 +28,7 @@ pipeline {
             steps {
                 sh """
                 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $REGISTRY_URL
-                    docker build -t $IMAGE_NAME:$IMAGE_TAG -f services/bot/Dockerfile .
+                    docker build -t $IMAGE_NAME:$IMAGE_TAG -f services/worker/Dockerfile .
                     docker tag $IMAGE_NAME:$IMAGE_TAG $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
                     docker push $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
                 """
