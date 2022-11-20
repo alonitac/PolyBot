@@ -14,6 +14,7 @@ def process_msg(msg):
         s3.upload_file(video, config.get('videos_bucket'), video)
         os.remove(f'./{video}')
 
+
 def main():
     while True:
         try:
