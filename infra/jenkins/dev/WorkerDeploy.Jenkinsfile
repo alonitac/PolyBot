@@ -1,3 +1,5 @@
+properties([parameters([string(name: 'WORKER_IMAGE_NAME', trim: true)])])
+
 pipeline {
     agent {
         docker {
