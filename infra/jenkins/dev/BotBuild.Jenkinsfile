@@ -37,14 +37,6 @@ pipeline {
                 '''
             }
         }
-    // used snyk container test from - https://docs.snyk.io/snyk-cli/cli-reference and https://docs.snyk.io/snyk-cli/commands/container-test
-    stage('SNYK Check') {
-    steps {
-            withCredentials([string(credentialsId: '', variable: '')]) {
-                sh 'snyk container test $IMAGE_NAME:$IMAGE_TAG --severity-threshold=high --file=/home/ec2-user/workspace/dev/botBuild/services/bot/Dockerfile'
-            }
-        }
-    }
 
     stage('Build_part_2') {
         steps {
