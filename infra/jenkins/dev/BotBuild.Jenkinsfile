@@ -18,7 +18,7 @@ pipeline {
     environment {
     IMAGE_NAME = "YF_jenkinsBot"
     IMAGE_TAG = "0.0.$BUILD_NUMBER"
-    WORKSPACE = "/var/lib/jenkins/workspace/BotBuild/services"
+    WS = "/home/ec2-user/workspace/dev/BotBuild/"
     ECR_REGISTRY = "352708296901.dkr.ecr.eu-central-1.amazonaws.com"
     TEAM_EMAIL = 'yuval.fid@gmail.com'
 
@@ -30,8 +30,9 @@ pipeline {
                 // from jenkins demo build
                 sh 'echo building...'
                 sh '''
-                aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
-                docker build -t $IMAGE_NAME:$IMAGE_TAG .
+                aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 352708296901.dkr.ecr.eu-central-1.amazonaws.com
+                cd $WS
+                docker build -t $IMAGE_NAME:$IMAGE_TAG . -f services/bot/Dockerfile
 
                 '''
             }
@@ -45,7 +46,7 @@ pipeline {
         }
     }
 
-    stage('Continue_Build_Repost_Status') {
+    stage('Build_part_2') {
         steps {
             sh'''
             docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
