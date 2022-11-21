@@ -39,16 +39,6 @@ pipeline {
                 '''
             }
         }
-        // post used from docker docs - https://docs.docker.com/engine/reference/commandline/image_prune/
-        //The following removes images created more than 1 week ago for any case.
-        post {
-            always {
-            sh '''
-            echo 'One way or another, I have finished'
-            docker image prune -a --filter "until=168"
-            '''
-            }
-        }
    }
 
 
