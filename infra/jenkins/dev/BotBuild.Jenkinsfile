@@ -33,10 +33,34 @@ pipeline {
                 aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 352708296901.dkr.ecr.eu-central-1.amazonaws.com
                 cd $WS
                 docker build -t $IMAGE_NAME:$IMAGE_TAG . -f services/bot/Dockerfile
-                docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
-                docker push $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
 
                 '''
+            }
+        }
+    // used snyk container test from - https://docs.snyk.io/snyk-cli/cli-reference and https://docs.snyk.io/snyk-cli/commands/container-test
+    stage('SNYK Check') {
+    steps {
+            withCredentials([string(credentialsId: '', variable: '')]) {
+                sh 'snyk container test $IMAGE_NAME:$IMAGE_TAG --severity-threshold=high --file=/home/ec2-user/workspace/dev/botBuild/services/bot/Dockerfile'
+            }
+        }
+    }
+
+    stage('Build_part_2') {
+        steps {
+            sh'''
+            docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+            docker push $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+            '''
+        }
+        // post used from docker docs - https://docs.docker.com/engine/reference/commandline/image_prune/
+        //The following removes images created more than 1 week ago for any case.
+        post {
+            always {
+            sh '''
+            echo 'One way or another, I have finished'
+            docker image prune -a --filter "until=168"
+            '''
             }
         }
    }
