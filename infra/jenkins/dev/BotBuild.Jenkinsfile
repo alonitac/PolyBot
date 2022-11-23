@@ -37,7 +37,7 @@ pipeline {
             }
         }
 
-    stage('Build_tag-and-push') {
+    stage('tag-and-push') {
         steps {
             sh'''
             aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
@@ -51,7 +51,7 @@ pipeline {
             always {
             sh '''
             echo 'One way or another, I have finished'
-            docker image prune -a -f --filter "until=168"
+            docker image prune -a -f --filter "until=24"
             '''
             }
         }
