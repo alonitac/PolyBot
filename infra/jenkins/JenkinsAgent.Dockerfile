@@ -18,4 +18,3 @@ COPY --from=installer /usr/local/aws-cli/ /usr/local/aws-cli/
 COPY --from=installer /aws-cli-bin/ /usr/local/bin/
 COPY --from=installer /usr/local/bin/kubectl /usr/local/bin/
 
-
