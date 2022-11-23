@@ -49,7 +49,7 @@ pipeline {
             always {
             sh '''
             echo 'One way or another, I have finished'
-            docker image prune -a --filter "until=168" -y
+            docker image prune -a -f --filter "until=168"
             '''
             }
         }
