@@ -7,8 +7,6 @@ pipeline {
         }
     }
 
-    // TODO dev worker build stage
-}
     options {
     buildDiscarder(logRotator(daysToKeepStr: '30'))
     disableConcurrentBuilds()
