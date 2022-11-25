@@ -37,7 +37,7 @@ pipeline {
             }
         }
 
-    stage('Build_tag-and-push') {
+    stage('Build tag and push') {
         steps {
             sh'''
             aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
