@@ -60,7 +60,7 @@ pipeline {
 
         stage('Trigger Deploy worker process') {
             steps {
-                build job: 'botDeploy', wait: false, parameters: [
+                build job: 'workerDeploy', wait: false, parameters: [
                     string(name: 'WORKER_IMAGE_NAME', value: "${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}")
                 ]
             }
