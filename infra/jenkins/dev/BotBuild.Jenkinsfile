@@ -50,7 +50,7 @@ pipeline {
         post {
             always {
             sh '''
-            echo 'i have finished the job successfully'
+            echo 'i have finished the job successfully!'
             docker image prune -a -f --filter "until=24"
             '''
             }
