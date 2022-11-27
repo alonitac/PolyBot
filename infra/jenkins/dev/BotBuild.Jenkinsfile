@@ -18,7 +18,7 @@ pipeline {
     IMAGE_NAME = "yf-bot-ecr"
     IMAGE_TAG = "0.0.$BUILD_NUMBER"
     WS = "/home/ec2-user/workspace/dev/botBuild/"
-    ECR_REGISTRY = "public.ecr.aws/r7m7o9d4/yf-bot-ecr"
+    ECR_REGISTRY = "public.ecr.aws/r7m7o9d4"
     TEAM_EMAIL = 'yuval.fid@gmail.com'
 
     }
