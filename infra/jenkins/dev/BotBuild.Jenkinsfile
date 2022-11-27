@@ -29,7 +29,7 @@ pipeline {
                 // from jenkins demo build
                 sh 'echo building...'
                 sh '''
-                aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/r7m7o9d4
+                aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
                 docker build -t $IMAGE_NAME:$IMAGE_TAG . -f services/bot/Dockerfile
 
 
@@ -40,7 +40,6 @@ pipeline {
     stage('Build_tag-and-push') {
         steps {
             sh'''
-            aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/r7m7o9d4
             docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
             docker push $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
             '''
