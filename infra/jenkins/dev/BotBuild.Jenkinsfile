@@ -18,7 +18,7 @@ pipeline {
     IMAGE_NAME = "yf-bot-ecr"
     IMAGE_TAG = "0.0.$BUILD_NUMBER"
     WS = "/home/ec2-user/workspace/dev/botBuild/"
-    ECR_REGISTRY = "352708296901.dkr.ecr.eu-central-1.amazonaws.com"
+    ECR_REGISTRY = "public.ecr.aws/r7m7o9d4/yf-bot-ecr"
     TEAM_EMAIL = 'yuval.fid@gmail.com'
 
     }
@@ -58,7 +58,7 @@ pipeline {
    }
 
 
-        stage('Trigger Deploy bot ') {
+        stage('Trigger Deploy ') {
             steps {
                 build job: 'botDeploy', wait: false, parameters: [
                     string(name: 'BOT_IMAGE_NAME', value: "${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}")
