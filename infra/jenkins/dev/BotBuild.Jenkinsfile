@@ -18,7 +18,7 @@ pipeline {
     IMAGE_NAME = "yf-bot-ecr"
     IMAGE_TAG = "0.0.$BUILD_NUMBER"
     WS = "/home/ec2-user/workspace/dev/botBuild/"
-    ECR_REGISTRY = "public.ecr.aws/r7m7o9d4/yf-bot-ecr"
+    ECR_REGISTRY = "public.ecr.aws/r7m7o9d4"
     TEAM_EMAIL = 'yuval.fid@gmail.com'
 
     }
@@ -40,7 +40,7 @@ pipeline {
     stage('Build_tag-and-push') {
         steps {
             sh'''
-            aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
+            aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
             docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
             docker push $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
             '''
