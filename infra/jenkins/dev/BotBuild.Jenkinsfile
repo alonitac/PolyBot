@@ -29,7 +29,7 @@ pipeline {
                 // from jenkins demo build
                 sh 'echo building...'
                 sh '''
-                aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
+                aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/r7m7o9d4
                 docker build -t $IMAGE_NAME:$IMAGE_TAG . -f services/bot/Dockerfile
 
 
