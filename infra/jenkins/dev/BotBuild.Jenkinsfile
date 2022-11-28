@@ -37,7 +37,7 @@ pipeline {
             }
         }
 
-    stage('Build_tag-and-push') {
+    stage('Build tag and push') {
         steps {
             sh'''
             docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
