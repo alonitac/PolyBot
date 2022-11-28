@@ -1,6 +1,7 @@
 FROM python:3.9-slim-bullseye
 WORKDIR /app
 ENV APP_PATH=services/worker
+ADD common .
 COPY . .
 RUN pip install -r services/bot/requirements.txt
 
