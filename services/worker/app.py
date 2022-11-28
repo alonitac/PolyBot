@@ -3,10 +3,9 @@ import time
 import boto3
 import botocore
 from loguru import logger
-from utils import search_download_youtube_video
+from common.utils import search_download_youtube_video
 import os
-import sys
-sys.path.insert(0,'/app/common')
+
 
 def process_msg(msg):
     downloaded_videos = search_download_youtube_video(msg)
@@ -42,7 +41,7 @@ def main():
 
 
 if __name__ == '__main__':
-    with open('config.json') as f:
+    with open('common/config.json') as f:
         config = json.load(f)
 
     sqs = boto3.resource('sqs', region_name=config.get('aws_region'))
