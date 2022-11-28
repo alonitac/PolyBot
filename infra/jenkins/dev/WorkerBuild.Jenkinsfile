@@ -32,15 +32,13 @@ pipeline {
                 aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
                 docker build -t $IMAGE_NAME:$IMAGE_TAG . -f services/worker/Dockerfile
 
-
                 '''
             }
         }
 
-    stage('Build tag and push') {
+    stage('tag and push') {
         steps {
             sh'''
-            aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
             docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
             docker push $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
             '''
