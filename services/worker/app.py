@@ -5,7 +5,8 @@ import botocore
 from loguru import logger
 from utils import search_download_youtube_video
 import os
-
+import sys
+sys.path.insert(0,'/app/common')
 
 def process_msg(msg):
     downloaded_videos = search_download_youtube_video(msg)
