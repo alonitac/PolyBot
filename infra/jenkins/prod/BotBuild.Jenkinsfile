@@ -15,9 +15,9 @@ pipeline {
     }
     // env and image vars
     environment {
-    IMAGE_NAME = "yf-bot-ecr"
+    IMAGE_NAME = "yf-bot-ecr-prod"
     IMAGE_TAG = "0.0.$BUILD_NUMBER"
-    WS = "/home/ec2-user/workspace/dev/botBuild/"
+    WS = "/home/ec2-user/workspace/prod/botBuild/"
     ECR_REGISTRY = "352708296901.dkr.ecr.eu-central-1.amazonaws.com"
     TEAM_EMAIL = 'yuval.fid@gmail.com'
 
@@ -40,7 +40,6 @@ pipeline {
     stage('Build_tag-and-push') {
         steps {
             sh'''
-            aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
             docker tag $IMAGE_NAME:$IMAGE_TAG $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
             docker push $ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
             '''
@@ -51,14 +50,14 @@ pipeline {
             always {
             sh '''
             echo 'One way or another, I have finished'
-            docker image prune -a -f --filter "until=168"
+            docker image prune -a -f --filter "until=24"
             '''
             }
         }
    }
 
 
-        stage('Trigger Deploy bot ') {
+        stage('Trigger Deploy ') {
             steps {
                 build job: 'botDeploy', wait: false, parameters: [
                     string(name: 'BOT_IMAGE_NAME', value: "${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}")

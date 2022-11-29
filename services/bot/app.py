@@ -60,6 +60,8 @@ class YoutubeObjectDetectBot(Bot):
                     'chat_id': {'StringValue': chat_id, 'DataType': 'String'}
                 }
             )
+            S3_bucket_url = 'https://s3.console.aws.amazon.com/s3/buckets/aws-ex1-yf?region=eu-central-1&tab=objects'
+            self.send_text(update, f'hello. send me a video name in YouTube to download to S3 bucket!'(print(S3_bucket_url)), quote=False)
             logger.info(f'msg {response.get("MessageId")} has been sent to queue')
             self.send_text(update, f'Your message is being processed...', chat_id=chat_id)
 
