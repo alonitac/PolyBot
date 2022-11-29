@@ -15,7 +15,7 @@ pipeline {
     }
     // env and image vars
     environment {
-    IMAGE_NAME = "yf-bot-ecr"
+    IMAGE_NAME = "yf-bot-ecr-dev"
     IMAGE_TAG = "0.0.$BUILD_NUMBER"
     WS = "/home/ec2-user/workspace/dev/botBuild/"
     ECR_REGISTRY = "public.ecr.aws/r7m7o9d4"
