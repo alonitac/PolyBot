@@ -50,14 +50,14 @@ pipeline {
             always {
             sh '''
             echo 'One way or another, I have finished'
-            docker image prune -a -f --filter "until=168"
+            docker image prune -a -f --filter "until=24"
             '''
             }
         }
    }
 
 
-        stage('Trigger Deploy bot ') {
+        stage('Trigger Deploy ') {
             steps {
                 build job: 'botDeploy', wait: false, parameters: [
                     string(name: 'BOT_IMAGE_NAME', value: "${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}")
