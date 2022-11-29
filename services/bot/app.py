@@ -61,8 +61,7 @@ class YoutubeObjectDetectBot(Bot):
                 }
             )
             if update.message.text.startswith("/"):
-                return
-            self.send_text(update, f'hello. send me a video name in YouTube to download to S3 bucket!', quote=False)
+                self.send_text(update, f'hello. send me a video name in YouTube to download to S3 bucket!', quote=False)
             logger.info(f'msg {response.get("MessageId")} has been sent to queue')
             self.send_text(update, f'Your message is being processed...', chat_id=chat_id)
 
