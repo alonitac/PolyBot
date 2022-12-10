@@ -16,7 +16,7 @@ pipeline {
             steps {
                 // TODO dev bot build stage
                 sh '''
-
+                        docker login --username AWS --password-stdin $REGISTRY_URL
                         docker build -t   $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG . -f services/bot/Dockerfile
                         docker push $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
                 '''
