@@ -1,5 +1,5 @@
 {
-  "aws_region": "<region-id>",
+  "aws_region": "eu-north-1",
   "videos_bucket": "<videos-bucket>",
   "bot_to_worker_queue_name": "<sqs-queue>"
 }
