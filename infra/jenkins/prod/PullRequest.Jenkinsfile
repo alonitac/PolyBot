@@ -1,21 +1,21 @@
-pipeline {
-    agent any
+    pipeline {
+        agent any
 
-    stages {
-        stage('Unittest Bot') {
-            steps {
-                echo 'testing bot...'
+        stages {
+            stage('Unittest Bot') {
+                steps {
+                    echo 'testing bot...'
+                }
             }
-        }
-        stage('Unittest Worker') {
-            steps {
-                echo 'testing worker...'
+            stage('Unittest Worker') {
+                steps {
+                    echo 'testing worker...'
+                }
             }
-        }
-        stage('Linting test') {
-            steps {
-              echo 'code linting'
+            stage('Linting test') {
+                steps {
+                  echo 'code linting'
+                }
             }
         }
     }
-}
