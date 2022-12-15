@@ -15,6 +15,7 @@
             IMAGE_NAME = "amip-ecr-bot-worker-dev1"
         }
         stages {
+            stage ('workerbuild') {
             steps {
                     sh '''
                     aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin $REGISTRY_URL
@@ -36,7 +37,7 @@
 
             stage('Trigger Deploy') {
                 steps {
-                    build job: 'BotDeploy', wait: false, parameters: [
+                    build job: 'workerDeploy', wait: false, parameters: [
                         string(name: 'BOT_IMAGE_NAME', value: "${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}")
                     ]
                 }
