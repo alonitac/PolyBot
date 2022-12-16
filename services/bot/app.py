@@ -1,7 +1,5 @@
 import json
-from venv\
 import logger
-
 import boto3
 import botocore
 from telegram.ext import Updater, MessageHandler, Filters
