@@ -154,4 +154,4 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 /.telegramToken
-/.telegramToken
+secrets/.telegramToken
