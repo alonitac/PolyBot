@@ -69,15 +69,7 @@ class YoutubeObjectDetectBot(Bot):
 
 
 if __name__ == '__main__':
-    """
-    with open('C:\\Users\\shlomi\\PycharmProjects\\PolyBot\\secrets\\.telegramToken') as f:
-        _token = f.read()
-     with open('C:\\Users\\shlomi\\PycharmProjects\\PolyBot\\common\\config.json') as f:   
-     
-     tName = config.get('token')
-    logger.info(f'Token {tName} ')
-    my_bot = YoutubeObjectDetectBot(token=config.get('token')) 
-    """
+
     with open('secrets/.telegramToken') as f:
         _token = f.read()
 
