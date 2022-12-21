@@ -77,6 +77,6 @@ if __name__ == '__main__':
 
     sqs = boto3.resource('sqs', region_name=config.get('aws_region'))
     workers_queue = sqs.get_queue_by_name(QueueName=config.get('bot_to_worker_queue_name'))
-    logger.info(f'msg test bot.py')
+    logger.info(f'msg test bot.py 2222')
     my_bot = YoutubeObjectDetectBot(_token)
     my_bot.start()
