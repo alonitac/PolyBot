@@ -38,6 +38,7 @@ def main():
             logger.exception(f"Couldn't receive messages {err}")
             time.sleep(10)
 
+#adding a comment
 if __name__ == '__main__':
     with open('common/config.json') as f:
         config = json.load(f)
