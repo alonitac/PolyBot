@@ -39,7 +39,6 @@ def main():
             logger.exception(f"Couldn't receive messages {err}")
             time.sleep(10)
 
-    # comment on py file
 
 
 if __name__ == '__main__':
