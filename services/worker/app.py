@@ -14,6 +14,7 @@ def process_msg(msg):
         s3.upload_file(video, config.get('videos_bucket'), video)
         os.remove(f'./{video}')
 
+
 def main():
     while True:
         try:
@@ -37,6 +38,8 @@ def main():
         except botocore.exceptions.ClientError as err:
             logger.exception(f"Couldn't receive messages {err}")
             time.sleep(10)
+
+    # comment on py file
 
 
 if __name__ == '__main__':
