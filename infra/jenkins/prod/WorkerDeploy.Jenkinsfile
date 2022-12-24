@@ -3,7 +3,7 @@ properties([parameters([string(name: 'WORKER_IMAGE_NAME', trim: true)])])
 pipeline {
     agent {
         docker {
-            label 'general'
+            label 'polybot_cicd_general'
             image '352708296901.dkr.ecr.us-east-1.amazonaws.com/shay-polybot-jenkins-agent:2'
             args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
         }
