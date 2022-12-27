@@ -13,6 +13,7 @@
             IMAGE_NAME = "amip-ecr-bot-dev1"
         }
         stages {
+             stage('Botbuild') {
             steps {
                     sh '''
                     aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin $REGISTRY_URL
@@ -21,7 +22,8 @@
                     docker push $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
                     '''
                 }
-                post{
+
+                post {
                 always {
                     sh '''
                        docker image prune -f --filter "label=app=bot"
@@ -29,6 +31,7 @@
                     '''
                     }
                 }
+              }
             stage('Trigger Deploy') {
                 steps {
                     build job: 'BotDeploy', wait: false, parameters: [
