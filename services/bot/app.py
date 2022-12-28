@@ -44,7 +44,7 @@ class QuoteBot(Bot):
         if update.message.text == 'Don\'t quote me please':
             to_quote = False
 
-        self.send_text(update, f'Your original message: {update.message.text}', quote=to_quote)
+        self.send_text(update, f'Hi, Your original message: {update.message.text}', quote=to_quote)
 
 
 class YoutubeObjectDetectBot(Bot):
