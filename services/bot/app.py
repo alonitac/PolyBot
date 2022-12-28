@@ -44,7 +44,7 @@ class QuoteBot(Bot):
         if update.message.text == 'Don\'t quote me please':
             to_quote = False
 
-        self.send_text(update, f'Your original message: {update.message.text}', quote=to_quote)
+        self.send_text(update, f'Hi, Your original message: {update.message.text}', quote=to_quote)
 
 
 class YoutubeObjectDetectBot(Bot):
@@ -69,6 +69,7 @@ class YoutubeObjectDetectBot(Bot):
 
 
 if __name__ == '__main__':
+
     with open('secrets/.telegramToken') as f:
         _token = f.read()
 
@@ -77,6 +78,5 @@ if __name__ == '__main__':
 
     sqs = boto3.resource('sqs', region_name=config.get('aws_region'))
     workers_queue = sqs.get_queue_by_name(QueueName=config.get('bot_to_worker_queue_name'))
-
     my_bot = YoutubeObjectDetectBot(_token)
     my_bot.start()
