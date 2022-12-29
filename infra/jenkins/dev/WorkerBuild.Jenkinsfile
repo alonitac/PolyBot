@@ -13,9 +13,10 @@
             REGISTRY_URL ="352708296901.dkr.ecr.eu-north-1.amazonaws.com"
             IMAGE_TAG = "0.0.$BUILD_NUMBER"
             IMAGE_NAME = "amip-ecr-bot-worker-dev1"
-        }
-        stages {
-            stage ('workerbuild') {
+     }
+
+     stages {
+            stage ('WorkerBuild') {
             steps {
                     sh '''
                     aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin $REGISTRY_URL
@@ -24,6 +25,7 @@
                     docker push $REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG
                     '''
                 }
+
                 post{
                 always {
                     sh '''
@@ -32,7 +34,6 @@
                     '''
                     }
                 }
-
             }
 
             stage('Trigger Deploy') {
