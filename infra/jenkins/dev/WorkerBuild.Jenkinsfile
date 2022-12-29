@@ -10,7 +10,7 @@
         environment {
             REGISTRY_URL ="352708296901.dkr.ecr.eu-north-1.amazonaws.com"
             IMAGE_TAG = "0.0.$BUILD_NUMBER"
-            IMAGE_NAME = "amip-ecr-bot-worker-dev1"
+            IMAGE_NAME = "amip-ecr-worker-dev1"
         }
         stages {
              stage('WorkerBuild') {
