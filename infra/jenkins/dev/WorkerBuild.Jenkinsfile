@@ -23,15 +23,7 @@
                     '''
                 }
 
-                post {
-                always {
-                    sh '''
-                       docker image prune -f --filter "label=app=bot"
-
-                    '''
-                    }
-                }
-              }
+            }
             stage('Trigger Deploy') {
                 steps {
                     build job: 'WorkerDeploy', wait: false, parameters: [
