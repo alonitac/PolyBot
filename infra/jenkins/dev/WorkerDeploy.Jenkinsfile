@@ -16,7 +16,7 @@
         }
 
         stages {
-            stage('WorkerDeploy') {
+            stage('Worker Deploy') {
                 steps {
                     withCredentials([
                         file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')
