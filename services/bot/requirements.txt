@@ -1,4 +1,4 @@
-python-telegram-bot>=13.11
+python-telegram-bot==13.15
 yt-dlp>=2022.6.29
 loguru
 boto3
