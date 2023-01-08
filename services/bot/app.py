@@ -61,7 +61,7 @@ class YoutubeObjectDetectBot(Bot):
                 }
             )
             logger.info(f'msg {response.get("MessageId")} has been sent to queue')
-            self.send_text(update, f'Hi, Your message is being processed...', chat_id=chat_id)
+            self.send_text(update, f'Hi, Your message is being processed....', chat_id=chat_id)
 
         except botocore.exceptions.ClientError as error:
             logger.error(error)
