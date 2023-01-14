@@ -1,6 +1,0 @@
-{
-  "aws_region": "eu-central-1",
-  "bot_to_worker_queue_name": "shlomigd-aws-ex1-polybot-queue",
-  "autoscaling_group_name": "shlomigdag",
-  "token": "5561285440:AAG7yYi2w0XvCA4RsU23lkkiILdomWVZDGA"
-}
