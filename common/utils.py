@@ -8,7 +8,24 @@ def search_download_youtube_video(video_name, num_results=1):
     :param num_results: integer representing how many videos to download
     :return: list of paths to your downloaded video files
     """
-    with YoutubeDL() as ydl:
-        videos = ydl.extract_info(f"ytsearch{num_results}:{video_name}", download=True)['entries']
+    ydl_opts = {
+        'max_filesize': 104857600
+    }
+    with YoutubeDL(ydl_opts) as ydl:
+        """
+        URL = ydl.extract_info(f"ytsearch{num_results}:{video_name}", download=False)['entries'][0]['webpage_url']
+        return [ydl.prepare_filename(video) + "," + videos["webpage_url"] for video in videos]
+        """
+        try:
+            videos = ydl.extract_info(f"ytsearch{num_results}:{video_name}", download=True)['entries']
 
-    return [ydl.prepare_filename(video) for video in videos]
+            for video in videos:
+                vdict = {}
+
+                title = ydl.prepare_filename(video)
+                vdict[title] = video['webpage_url']
+
+        except Exception as e:
+            print(f"error in search_download_youtube_video: {repr(e)}")
+
+    return vdict

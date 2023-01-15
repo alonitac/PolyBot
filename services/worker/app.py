@@ -10,9 +10,14 @@ import os
 def process_msg(msg):
     downloaded_videos = search_download_youtube_video(msg)
     s3 = boto3.client('s3')
-    for video in downloaded_videos:
-        s3.upload_file(video, config.get('videos_bucket'), video)
-        os.remove(f'./{video}')
+    for k, v in downloaded_videos.items():
+        """
+        s3.upload_file(xlist[0], config.get('videos_bucket'), xlist[0], ExtraArgs={'Metadata': {'URL': xlist[1]}})
+        s3.upload_file(video, config.get('videos_bucket'), video, ExtraArgs={'Metadata': {'URL': video}})
+        """
+
+        s3.upload_file(k, config.get('videos_bucket'), k)
+        os.remove(f'./{k}')
 
 
 def main():
@@ -41,7 +46,7 @@ def main():
 
 
 if __name__ == '__main__':
-    with open('common/config.json') as f:
+    with open('C:/Users/shlomi/PycharmProjects/PolyBot/common/config.json') as f:
         config = json.load(f)
 
     sqs = boto3.resource('sqs', region_name=config.get('aws_region'))
