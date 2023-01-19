@@ -11,19 +11,26 @@ import services.bot.app
 
 
 def process_msg(msg):
-    downloaded_videos = search_download_youtube_video(msg)
-    s3 = boto3.client('s3')
-    for k, v in downloaded_videos.items():
-        """
-        s3.upload_file(xlist[0], config.get('videos_bucket'), xlist[0], ExtraArgs={'Metadata': {'URL': xlist[1]}})
-        s3.upload_file(video, config.get('videos_bucket'), video, ExtraArgs={'Metadata': {'URL': video}})
-         Bot.send_text(chat_id, f'Something ')
-        """
+    try:
+        downloaded_videos = search_download_youtube_video(msg)
+        s3 = boto3.client('s3')
+        for k, v in downloaded_videos.items():
+            logger.info(f'processing message {k}')
+            """
+            s3.upload_file(xlist[0], config.get('videos_bucket'), xlist[0], ExtraArgs={'Metadata': {'URL': xlist[1]}})
+            s3.upload_file(video, config.get('videos_bucket'), video, ExtraArgs={'Metadata': {'URL': video}})
+             Bot.send_text(chat_id, f'Something ')
+            """
 
-        s3.upload_file(k, config.get('videos_bucket'), k)
-        os.remove(f'./{k}')
-        services.bot.app.YoutubeObjectDetectBot.tmessage(telegram.Update, "khklhkhlh",
-                                                         telegram.ext.callbackcontext.CallbackContext)
+            s3.upload_file(k, config.get('videos_bucket'), k)
+            os.remove(f'./{k}')
+
+            """
+            services.bot.app.YoutubeObjectDetectBot.tmessage(telegram.Update, "khklhkhlh",
+                                                             telegram.ext.callbackcontext.CallbackContext)
+            """
+    except botocore.exceptions.ClientError as err:
+        logger.exception(f"process_msg {err}")
 
 
 def main():

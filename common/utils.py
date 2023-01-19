@@ -19,9 +19,11 @@ def search_download_youtube_video(video_name, download=True, num_results=1):
         """
         try:
             videos = ydl.extract_info(f"ytsearch{num_results}:{video_name}", download=download)['entries']
+
             vdict = {}
             for video in videos:
-
+                ed = video["duration"]
+                print(f"duration: {ed}")
                 title = ydl.prepare_filename(video)
                 vdict[title] = video['webpage_url']
 

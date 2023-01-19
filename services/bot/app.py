@@ -49,6 +49,8 @@ class QuoteBot(Bot):
 
 
 class YoutubeObjectDetectBot(Bot):
+    vdict = {}
+
     def __init__(self, token):
         super().__init__(token)
     """
@@ -58,33 +60,38 @@ class YoutubeObjectDetectBot(Bot):
     """
 
     def _message_handler(self, update, context):
+
         try:
             chat_id = str(update.effective_message.chat_id)
 
             if "@" not in update.message.text:
+                YoutubeObjectDetectBot.vdict = {}
                 downloaded_videos = search_download_youtube_video(update.message.text, False, 3)
-                vdict = {}
+
                 i = 1
                 for k, v in downloaded_videos.items():
                     self.send_text(update, f'To upload the following file write @{i}', chat_id=chat_id)
                     self.send_text(update, v, chat_id=chat_id)
-                    vdict[k] = v
+                    YoutubeObjectDetectBot.vdict[i] = k
                     i += 1
 
             else:
                 self.send_text(update, f'You choose {update.message.text}', chat_id=chat_id)
-                for k, v in vdict.items():
+                msg = str(YoutubeObjectDetectBot.vdict[int(update.message.text.replace('@', ''))])
+                response = workers_queue.send_message(
+                    MessageBody=msg,
+                    MessageAttributes={
+                        'chat_id': {'StringValue': chat_id, 'DataType': 'String'}
+                    }
+                )
+                logger.info(f'msg {response.get("MessageId")} has been sent to queue')
+                self.send_text(update, f'Hii, Your message is being processed...', chat_id=chat_id)
+
+            """
+                            for k, v in YoutubeObjectDetectBot.vdict.items():
                     self.send_text(update, k, chat_id=chat_id)
                     self.send_text(update, v, chat_id=chat_id)
-            """
-            response = workers_queue.send_message(
-                MessageBody=update.message.text,
-                MessageAttributes={
-                    'chat_id': {'StringValue': chat_id, 'DataType': 'String'}
-                }
-            )
-            logger.info(f'msg {response.get("MessageId")} has been sent to queue')
-            self.send_text(update, f'Hii, Your message is being processed...', chat_id=chat_id)
+            
             
             if "@" in update.message.text:
                 self.send_text(update, update.message.text, chat_id=chat_id)
