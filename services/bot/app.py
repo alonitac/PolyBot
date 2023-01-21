@@ -85,7 +85,6 @@ class YoutubeObjectDetectBot(Bot):
                 self.send_text(update, f'You choose {update.message.text}', chat_id=chat_id)
                 mes = update.message.text.lower()
                 p = mes.replace('@addfile', '')
-                self.send_text(update, f'You choose {p}', chat_id=chat_id)
                 msg = str(YoutubeObjectDetectBot.vdict[int(p)])
                 response = workers_queue.send_message(
                     MessageBody=msg,
@@ -95,18 +94,47 @@ class YoutubeObjectDetectBot(Bot):
                 )
                 logger.info(f'msg {response.get("MessageId")} has been sent to queue')
                 self.send_text(update, f'Hii, Your message is being processed...', chat_id=chat_id)
+            elif "@addall" in update.message.text.lower():
+                self.send_text(update, f'You choose to Add all files', chat_id=chat_id)
+                for k, v in YoutubeObjectDetectBot.vdict.items():
+                    msg = v
+                    response = workers_queue.send_message(
+                        MessageBody=msg,
+                        MessageAttributes={
+                            'chat_id': {'StringValue': chat_id, 'DataType': 'String'}
+                        }
+                    )
+                logger.info(f'msg {response.get("MessageId")} has been sent to queue')
+                self.send_text(update, f'Hii, Your message is being processed...', chat_id=chat_id)
             elif "@list" in update.message.text.lower():
                 s3_client = boto3.client("s3")
                 bucket_name = config.get('videos_bucket')
                 response = s3_client.list_objects_v2(Bucket=bucket_name)
                 files = response.get("Contents")
-                c = 1
-                for file in files:
-                    print(f"file_name: {file['Key']}, size: {file['Size']}")
-                    fs = file['Size']/1048576
-                    self.send_text(update, f"{c}:  file_name: {file['Key']},   size: {int(fs)}MB", chat_id=chat_id)
-                    YoutubeObjectDetectBot.s3dict[c] = file['Key']
-                    c += 1
+                if files is not None:
+                    c = 1
+                    for file in files:
+                        print(f"file_name: {file['Key']}, size: {file['Size']}")
+                        fs = file['Size']/1048576
+                        self.send_text(update, f"{c}:  file_name: {file['Key']},   size: {int(fs)}MB", chat_id=chat_id)
+                        YoutubeObjectDetectBot.s3dict[c] = file['Key']
+                        c += 1
+                else:
+                    self.send_text(update, f'list is empty', chat_id=chat_id)
+            elif "@playlist" in update.message.text.lower():
+                s3_client = boto3.client("s3")
+                bucket_name = config.get('videos_bucket')
+                response = s3_client.list_objects_v2(Bucket=bucket_name)
+                files = response.get("Contents")
+                if files is not None:
+
+                    for file in files:
+                        downloaded_videos = search_download_youtube_video(file['Key'], False)
+                        for k, v in downloaded_videos.items():
+                            self.send_text(update, v, chat_id=chat_id)
+
+                else:
+                    self.send_text(update, f'Playlist is empty', chat_id=chat_id)
             elif "@delfile" in update.message.text.lower():
                 s3 = boto3.resource('s3')
                 mes = update.message.text.lower()
@@ -121,7 +149,7 @@ class YoutubeObjectDetectBot(Bot):
                 for key in YoutubeObjectDetectBot.s3dict:
                     s3.Object(config.get('videos_bucket'), YoutubeObjectDetectBot.s3dict[key]).delete()
             else:
-                print(f'end')
+                self.send_text(update, f'Wrong command ,Please try again.', chat_id=chat_id)
             """
                             for k, v in YoutubeObjectDetectBot.vdict.items():
                     self.send_text(update, k, chat_id=chat_id)

@@ -12,8 +12,10 @@ import services.bot.app
 
 def process_msg(msg):
     try:
+        logger.info(f'Video name sent to download {msg}')
         downloaded_videos = search_download_youtube_video(msg)
         s3 = boto3.client('s3')
+        logger.info(f'After download')
         for k, v in downloaded_videos.items():
             logger.info(f'processing message {k}')
             """
