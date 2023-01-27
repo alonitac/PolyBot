@@ -2,16 +2,9 @@ import json
 import time
 import boto3
 import botocore
-"""
-import telegram
-from telegram.ext import Updater, MessageHandler, Filters
-"""
 from loguru import logger
 from common.utils import search_download_youtube_video
 import os
-"""
-import services.bot.app
-"""
 
 
 def process_msg(msg):
