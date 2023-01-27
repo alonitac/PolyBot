@@ -88,7 +88,7 @@ class YoutubeObjectDetectBot(Bot):
                 self.commands(update, context)
 
             else:
-                self.send_text(update, f'Wrong command1 ,Please try again.', chat_id=chat_id)
+                self.send_text(update, f'Wrong command ,Please try again.', chat_id=chat_id)
 
         except botocore.exceptions.ClientError as error:
             logger.error(error)
@@ -120,7 +120,7 @@ class YoutubeObjectDetectBot(Bot):
             }
         )
         logger.info(f'msg {response.get("MessageId")} has been sent to queue')
-        self.send_text(update, f'Hii, Your message is being processed...', chat_id=chat_id)
+        self.send_text(update, f'Hi, Your message is being processed...', chat_id=chat_id)
 
     def add_all_files(self, update, context):
         chat_id = str(update.effective_message.chat_id)
