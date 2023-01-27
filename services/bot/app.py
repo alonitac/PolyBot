@@ -86,7 +86,7 @@ class YoutubeObjectDetectBot(Bot):
                 self.commands(update, context)
 
             else:
-                self.send_text(update, f'Wrong command ,Please try again.', chat_id=chat_id)
+                self.send_text(update, f'Wrong command1 ,Please try again.', chat_id=chat_id)
 
         except botocore.exceptions.ClientError as error:
             logger.error(error)
