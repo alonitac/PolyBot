@@ -16,10 +16,7 @@ def search_download_youtube_video(video_name, download=True, num_results=1):
     }
     """
     with YoutubeDL() as ydl:
-        """
-        URL = ydl.extract_info(f"ytsearch{num_results}:{video_name}", download=False)['entries'][0]['webpage_url']
-        return [ydl.prepare_filename(video) + "," + videos["webpage_url"] for video in videos]
-        """
+
         try:
 
             print(f"Video Name to download {video_name}")
