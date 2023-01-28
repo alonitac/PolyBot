@@ -4,12 +4,12 @@ pipeline {
     stages {
         stage('Unittest Bot') {
             steps {
-                echo 'testing bot....'
+                echo 'testing bot..'
             }
         }
         stage('Unittest Worker') {
             steps {
-                echo 'testing worker....'
+                echo 'testing worker..'
             }
         }
         stage('Linting test') {
