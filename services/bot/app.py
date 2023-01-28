@@ -121,7 +121,7 @@ class YoutubeObjectDetectBot(Bot):
 
     def add_all_files(self, update, context):
         chat_id = str(update.effective_message.chat_id)
-        self.send_text(update, f'You choose to Add all files2', chat_id=chat_id)
+        self.send_text(update, f'You choose to Add all files', chat_id=chat_id)
         for k, v in YoutubeObjectDetectBot.vdict.items():
             msg = v
             response = workers_queue.send_message(
