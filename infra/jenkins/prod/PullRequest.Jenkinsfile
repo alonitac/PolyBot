@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Unittest Bot') {
             steps {
-                echo 'testing bot...'
+                echo 'testing bot....'
             }
         }
         stage('Unittest Worker') {
