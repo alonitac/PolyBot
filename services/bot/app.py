@@ -130,6 +130,7 @@ class YoutubeObjectDetectBot(Bot):
                     'chat_id': {'StringValue': chat_id, 'DataType': 'String'}
                 }
             )
+
         logger.info(f'msg {response.get("MessageId")} has been sent to queue')
         self.send_text(update, f'Hii, Your message is being processed...', chat_id=chat_id)
 
@@ -149,6 +150,7 @@ class YoutubeObjectDetectBot(Bot):
                 c += 1
         else:
             self.send_text(update, f'list is empty', chat_id=chat_id)
+
 
     def playlist(self, update, context):
         chat_id = str(update.effective_message.chat_id)
