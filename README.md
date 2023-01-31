@@ -16,4 +16,4 @@ The Bot manage the playlist according to the following commands:
     @delfile(x) - delete the chosen file (run after @list command).
     @delall - delete all files (run after @list command).
 
-regular text without the @ sign will be searched in YouTube. 
+Regular text without the @ sign will be searched in YouTube. 
