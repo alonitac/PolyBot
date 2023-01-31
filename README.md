@@ -9,11 +9,11 @@ the S3 bucket will serve as a playlist.
 
 The Bot manage the playlist according to the following commands:
 
-@list - list all files in Playlist and their size (S3 bucket)
-@playlist - list all files in Playlist and their URLs (S3 bucket)
-@addfile(x) - add the file you want to upload (run after the search)
-@addall - upload all files (run after the search)
-@delfile(x) - delete the chosen file (run after @list command)
-@delall - delete all files (run after @list command)
+@list - list all files in Playlist and their size (S3 bucket).
+@playlist - list all files in Playlist and their URLs (S3 bucket).
+@addfile(x) - add the file you want to upload (run after the search).
+@addall - upload all files (run after the search).
+@delfile(x) - delete the chosen file (run after @list command).
+@delall - delete all files (run after @list command).
 
 regular text will be searched in YouTube. 
